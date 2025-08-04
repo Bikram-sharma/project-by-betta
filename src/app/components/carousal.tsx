@@ -2,21 +2,24 @@ import { useState, useEffect, useRef } from "react";
 
 const slides = [
   {
-    src: "/img/pic1.jpg",
-    title: "Get your services at your DoorStep",
-    description: " ",
+    src: "/image/first.jpg",
+    title: '"We found a local plumber in 10 minutes — no calls, no hassle."',
+    description:
+      "BETTA helps families, businesses, and individuals connect with trusted local professionals — fast.",
     alt: " ",
   },
   {
-    src: "/img/pic2.jpg",
-    title: "Get your services at your DoorStep",
-    description: " ",
+    src: "/image/second.jpg",
+    title: "Skilled? Get Hired.",
+    description:
+      "BETTA gives you a platform to earn, grow, and get recognized for your talent — whether you’re a carpenter, developer, or designer. ",
     alt: " ",
   },
   {
-    src: "/img/pic3.jpeg",
-    title: "Get your services at your DoorStep",
-    description: "",
+    src: "/image/third.jpg",
+    title: "Only the Best Get In.",
+    description:
+      "All service providers are verified, rated, and reviewed by real clients. BETTA puts quality and trust first.",
     alt: " ",
   },
   {
@@ -27,12 +30,9 @@ const slides = [
   },
 ];
 
-export default function Carousel({
-  autoPlay = true,
-  autoPlayInterval = 5000,
-}) {
+export default function Carousel({ autoPlay = true, autoPlayInterval = 5000 }) {
   const [current, setCurrent] = useState(0);
-  const timeoutRef = useRef(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const length = slides.length;
 
   const resetAutoPlay = () => {
@@ -61,10 +61,10 @@ export default function Carousel({
 
   // Swipe support (basic)
   const startX = useRef(0);
-  const handleTouchStart = (e) => {
+  const handleTouchStart = (e: React.TouchEvent<HTMLElement>) => {
     startX.current = e.touches[0].clientX;
   };
-  const handleTouchEnd = (e) => {
+  const handleTouchEnd = (e: React.TouchEvent<HTMLElement>) => {
     const endX = e.changedTouches[0].clientX;
     const diff = endX - startX.current;
     if (Math.abs(diff) > 50) {
@@ -74,29 +74,25 @@ export default function Carousel({
   };
 
   return (
-    <div className="relative w-full overflow-hidden">
+    <div className="relative overflow-hidden w-[50vw] h-[60vh] mx-auto my-20">
       {/* Slides */}
-      <div className="flex transition-transform duration-700"
-           style={{ transform: `translateX(-${current * 100}%)` }}
-           onTouchStart={handleTouchStart}
-           onTouchEnd={handleTouchEnd}
+      <div
+        className="flex transition-transform duration-700"
+        style={{ transform: `translateX(-${current * 100}%)` }}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
       >
         {slides.map((slide, idx) => (
           <div
             key={idx}
-            className="min-w-full h-64 md:h-96 relative flex-shrink-0"
+            className="min-w-full h-64 md:h-96 relative flex-shrink-0 bg-cover bg-[center_20%]"
+            style={{ backgroundImage: `url(${slide.src})` }}
           >
-            <img
-              src={slide.src}
-              alt={slide.alt}
-              className="w-full h-full object-cover"
-              draggable="false"
-            />
             {/* Text overlay */}
-            <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/60 to-transparent p-6">
-              <div className="text-white max-w-xs">
-                <h2 className="text-xl font-bold">{slide.title}</h2>
-                <p className="text-sm mt-1">{slide.description}</p>
+            <div className="absolute inset-0 flex items-end justify-center bg-gradient-to-t from-black/60 to-transparent ">
+              <div className="text-white  bg-black/40 text-center px-5">
+                <h2 className="text-2xl font-bold">{slide.title}</h2>
+                <p className="text-lg mt-1">{slide.description}</p>
               </div>
             </div>
           </div>
