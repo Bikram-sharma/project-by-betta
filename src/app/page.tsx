@@ -1,3 +1,4 @@
+
 'use client'
 import Header from "@/app/components/navbar";
 import Carousel from "@/app/components/carousal";
@@ -55,5 +56,6 @@ export default function Home() {
       </div>
 
     </main>
+
   );
 }
