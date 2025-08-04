@@ -1,0 +1,137 @@
+import { useState, useEffect, useRef } from "react";
+
+const slides = [
+  {
+    src: "/img/pic1.jpg",
+    title: "Get your services at your DoorStep",
+    description: " ",
+    alt: " ",
+  },
+  {
+    src: "/img/pic2.jpg",
+    title: "Get your services at your DoorStep",
+    description: " ",
+    alt: " ",
+  },
+  {
+    src: "/img/pic3.jpeg",
+    title: "Get your services at your DoorStep",
+    description: "",
+    alt: " ",
+  },
+  {
+    src: "/img/pic4.jpg",
+    title: "Get your services at your DoorStep",
+    description: " ",
+    alt: " ",
+  },
+];
+
+export default function Carousel({
+  autoPlay = true,
+  autoPlayInterval = 5000,
+}) {
+  const [current, setCurrent] = useState(0);
+  const timeoutRef = useRef(null);
+  const length = slides.length;
+
+  const resetAutoPlay = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    if (autoPlay) {
+      timeoutRef.current = setTimeout(
+        () => setCurrent((prev) => (prev + 1) % length),
+        autoPlayInterval
+      );
+    }
+  };
+
+  useEffect(() => {
+    resetAutoPlay();
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, [current, autoPlay]);
+
+  const prev = () => {
+    setCurrent((c) => (c - 1 + length) % length);
+  };
+  const next = () => {
+    setCurrent((c) => (c + 1) % length);
+  };
+
+  // Swipe support (basic)
+  const startX = useRef(0);
+  const handleTouchStart = (e) => {
+    startX.current = e.touches[0].clientX;
+  };
+  const handleTouchEnd = (e) => {
+    const endX = e.changedTouches[0].clientX;
+    const diff = endX - startX.current;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) prev();
+      else next();
+    }
+  };
+
+  return (
+    <div className="relative w-full overflow-hidden">
+      {/* Slides */}
+      <div className="flex transition-transform duration-700"
+           style={{ transform: `translateX(-${current * 100}%)` }}
+           onTouchStart={handleTouchStart}
+           onTouchEnd={handleTouchEnd}
+      >
+        {slides.map((slide, idx) => (
+          <div
+            key={idx}
+            className="min-w-full h-64 md:h-96 relative flex-shrink-0"
+          >
+            <img
+              src={slide.src}
+              alt={slide.alt}
+              className="w-full h-full object-cover"
+              draggable="false"
+            />
+            {/* Text overlay */}
+            <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/60 to-transparent p-6">
+              <div className="text-white max-w-xs">
+                <h2 className="text-xl font-bold">{slide.title}</h2>
+                <p className="text-sm mt-1">{slide.description}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Prev / Next buttons */}
+      <button
+        aria-label="Previous slide"
+        onClick={prev}
+        className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-30 hover:bg-opacity-50 text-white rounded-full p-2"
+      >
+        ‹
+      </button>
+      <button
+        aria-label="Next slide"
+        onClick={next}
+        className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-30 hover:bg-opacity-50 text-white rounded-full p-2"
+      >
+        ›
+      </button>
+
+      {/* Indicators */}
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
+        {slides.map((_, i) => (
+          <button
+            key={i}
+            aria-label={`Go to slide ${i + 1}`}
+            onClick={() => setCurrent(i)}
+            className={`w-3 h-3 rounded-full transition-all ${
+              current === i ? "bg-white" : "bg-white/40"
+            }`}
+          ></button>
+        ))}
+      </div>
+    </div>
+  );
+}
