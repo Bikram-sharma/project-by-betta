@@ -45,7 +45,7 @@ export default function Login() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-[#7C504A] w-[30vw] h-[60vh] m-auto mt-30 rounded-2xl grid grid-cols-1 grid-rows-5 gap-4 p-8 place-items-center relative"
+      className="bg-[#1373E6] w-[30vw] h-[60vh] m-auto mt-20 mb-20  rounded-2xl grid grid-cols-1 grid-rows-5 gap-4 p-8 place-items-center relative"
     >
       <Link
         href={"/auth/signup"} // Update to your actual sign-up route
@@ -60,7 +60,7 @@ export default function Login() {
           type="email"
           name="email"
           id="email"
-          className="w-full h-10 rounded-lg bg-[#232323] text-white px-4 focus:outline-none focus:ring-1 focus:ring-[#3b82f6]"
+          className="w-full h-10 rounded-lg bg-white text-black px-4 focus:outline-none focus:ring-1 focus:ring-[#3b82f6]"
           placeholder="Enter your email"
           required
         />
@@ -71,7 +71,7 @@ export default function Login() {
           type="password"
           name="password"
           id="password"
-          className="w-full h-10 rounded-lg bg-[#232323] text-white px-4 focus:outline-none focus:ring-1 focus:ring-[#3b82f6]"
+          className="w-full h-10 rounded-lg  bg-white text-black px-4 focus:outline-none focus:ring-1 focus:ring-[#3b82f6]"
           placeholder="Enter your password"
           required
         />
