@@ -8,7 +8,7 @@ export default function Home() {
       </div>
 
      <div className="flex">
-       <div className="h-full w-1/2 p-2" 
+       <div className="h-full w-1/2 p-2">
         <h1 className="text-[#7C504A] font-sans font-bold text-4x">About Us</h1>
         <p className="text-black p-2"> An on-demand service marketplace that connects clients with vetted experts (freelancers, contractors,
            professionals) for specific tasks or projects. Clients describe their need, browse available experts,
