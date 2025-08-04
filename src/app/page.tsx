@@ -1,7 +1,3 @@
-
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-
 export default function Home() {
   return (
     <main className="bg-yellow-50 min-h-screen p-6">
@@ -12,8 +8,7 @@ export default function Home() {
       </div>
 
      <div className="flex">
-       <div className="h-full w-1/2 p-2" style={{
-        backgroundImage: "url('/img/logo1.png')",}}>
+       <div className="h-full w-1/2 p-2" 
         <h1 className="text-[#7C504A] font-sans font-bold text-4x">About Us</h1>
         <p className="text-black p-2"> An on-demand service marketplace that connects clients with vetted experts (freelancers, contractors,
            professionals) for specific tasks or projects. Clients describe their need, browse available experts,
@@ -22,6 +17,7 @@ export default function Home() {
 
        <div className="h-full w-1/2 p-2">
             <h1 className="text-[#7C504A] font-sans font-bold text-4x">Service Provided</h1>
+         
         <ol className="list-decimal list-inside space-y-4 text-black p-2">
           <li>
             <span className="font-bold text-[#7C504A]">Home Services</span>
@@ -50,6 +46,7 @@ export default function Home() {
             </ul>
           </li>
         </ol>
+         
        </div>
       </div>
 
