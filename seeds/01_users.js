@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 
 export async function seed(knex) {
-  await knex("users").del();
+  await knex.raw("TRUNCATE TABLE users RESTART IDENTITY CASCADE");
 
   await knex("users").insert([
     {
@@ -14,7 +14,7 @@ export async function seed(knex) {
       name: "Dema",
       email: "demal2525@gmail.com",
       password: await bcrypt.hash("admin123", 10),
-      role: "admin",
+      role: "user",
     },
     {
       name: "Phuntsho",
@@ -26,7 +26,7 @@ export async function seed(knex) {
       name: "Kuenzang",
       email: "kuenzang@gmail.com",
       password: await bcrypt.hash("admin123", 10),
-      role: "admin",
+      role: "user",
     },
   ]);
 }

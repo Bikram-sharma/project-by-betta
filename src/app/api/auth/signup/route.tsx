@@ -1,5 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
+import bcrypt from "bcryptjs";
 import { sendEmail } from "@/app/helper/mailer";
+import knex from "knex";
+import knexConfig from "../../../../../knexfile";
+
+const db = knex(knexConfig.development);
 
 export async function POST(req: NextRequest) {
   try {
@@ -13,22 +18,49 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const mailObj = {
+    const existingUser = await db("users").where({ email }).first();
+    if (existingUser) {
+      return NextResponse.json(
+        { message: "User already exists with this email" },
+        { status: 409 }
+      );
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const [newUser] = await db("users")
+      .insert({
+        name,
+        email,
+        password: hashedPassword,
+        role: "user",
+      })
+      .returning(["id", "name", "email"]);
+
+    await sendEmail({
       email,
       subject: "Sign up successful",
       message: `Hello ${name}, you have successfully signed up to Betta!`,
-    };
+    });
 
-    await sendEmail(mailObj);
-
-    return NextResponse.json({ message: "Email sent successfully" });
+    return NextResponse.json(
+      {
+        message: "User registered successfully",
+        user: newUser,
+      },
+      { status: 201 }
+    );
   } catch (error: unknown) {
-    let errorMessage = "Unknown error";
-    if (error instanceof Error) errorMessage = error.message;
-
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json(
       { message: "Something went wrong", error: errorMessage },
       { status: 500 }
     );
   }
+}
+
+export async function GET() {
+  const users = await db("users").select("*");
+  return Response.json(users);
 }
