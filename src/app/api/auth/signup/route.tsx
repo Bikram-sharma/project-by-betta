@@ -40,7 +40,27 @@ export async function POST(req: NextRequest) {
     await sendEmail({
       email,
       subject: "Sign up successful",
-      message: `Hello ${name}, you have successfully signed up to Betta!`,
+      message: `Hi ${name},
+
+Welcome to Betta Service! 🎉
+
+Thank you for signing up. We're excited to have you on board and can't wait to see you thrive in our community of skilled professionals.
+
+Your account has been successfully created. You can now:
+- Complete your profile and register as service provider
+- Start browsing service requests or post your own
+- Connect with clients or other professionals
+
+Get started by logging in here: http://localhost:3000/auth/login
+
+If you didn’t sign up for this account, please ignore this email or contact us at [support@yourapp.com].
+
+Welcome again, and happy working!
+
+Warm regards,  
+The Betta Service Team  
+BettaService.com  
+`,
     });
 
     return NextResponse.json(

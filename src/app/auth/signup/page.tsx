@@ -45,59 +45,84 @@ export default function Signup() {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="bg-[#1373E6] w-[30vw] h-[70vh] m-auto mt-20 mb-20 rounded-2xl grid grid-cols-1 grid-rows-5 gap-4 p-8 place-items-center relative "
-    >
-      <Link
-        href={"/auth/login"}
-        className="absolute top-4 right-8 hover:underline cursor-pointer"
+    <div className="bg-[#1373E6] w-[60vw] mx-auto flex justify-between my-10">
+      <div className="w-[50%] pl-10 flex items-center ">
+        <div className="border-r-2">
+          <h1 className="text-2xl m-5 pr-5">Welcome to Betta Service!</h1>
+          <p className="mr-10 mb-4 text-center text-xl">
+            Betta Service connects skilled professionals with clients who need
+            them.
+          </p>
+          <ul className="list-disc list-inside mb-5">
+            <li>Offer your services</li>
+            <li> Reach more customers</li>
+            <li>Get paid for your skills</li>
+          </ul>
+          <p>For clients:</p>
+          <ul className="list-disc list-inside">
+            <li> Find trusted experts</li>
+            <li> Book easily</li>
+            <li>Chat & collaborate</li>
+          </ul>
+          <p className="mr-10 mt-10 p-2 border text-center text-2xl">
+            Join Betta and grow with us!
+          </p>
+        </div>
+      </div>
+      <form
+        onSubmit={handleSubmit}
+        className="w-[30vw] h-[70vh] grid grid-cols-1 grid-rows-5 gap-4 p-8 place-items-center relative "
       >
-        Login
-      </Link>
-      <h2 className="text-3xl">Create an Account</h2>
-      <div className="w-full">
-        <label htmlFor="name">Name</label>
-        <input
-          type="text"
-          name="name"
-          id="name"
-          className="w-full h-10 rounded-lg bg-white text-black px-4 focus:outline-none focus:ring-1 focus:ring-[#3b82f6]"
-          placeholder="Enter your name"
-          required
-        />
-      </div>
-      <div className="w-full">
-        <label htmlFor="email">Email</label>
-        <input
-          type="email"
-          name="email"
-          id="email"
-          className="w-full h-10 rounded-lg bg-white text-black px-4 focus:outline-none focus:ring-1 focus:ring-[#3b82f6]"
-          placeholder="Enter your email"
-          required
-        />
-      </div>
-      <div className="w-full">
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          className="w-full h-10 rounded-lg  bg-white text-black px-4 focus:outline-none focus:ring-1 focus:ring-[#3b82f6]"
-          placeholder="Enter your password"
-          required
-        />
-      </div>
-      <button
-        type="submit"
-        className="w-full bg-amber-50 hover:bg-amber-50/90 cursor-pointer h-10 rounded-lg font-bold text-black"
-        disabled={isLoading} // Disable button during loading
-      >
-        {isLoading ? "Signing up..." : "Sign up"}
-      </button>
-      {error && <p className="text-red-500 text-sm">{error}</p>}{" "}
-      {/* Display error */}
-    </form>
+        <Link
+          href={"/auth/login"}
+          className="absolute top-4 right-8 hover:underline cursor-pointer"
+        >
+          Login
+        </Link>
+        <h2 className="text-3xl">Create an Account</h2>
+        <div className="w-full">
+          <label htmlFor="name">Name</label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            className="w-full h-10 rounded-lg bg-white text-black px-4 focus:outline-none focus:ring-1 focus:ring-[#3b82f6]"
+            placeholder="Enter your name"
+            required
+          />
+        </div>
+        <div className="w-full">
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            className="w-full h-10 rounded-lg bg-white text-black px-4 focus:outline-none focus:ring-1 focus:ring-[#3b82f6]"
+            placeholder="Enter your email"
+            required
+          />
+        </div>
+        <div className="w-full">
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            className="w-full h-10 rounded-lg  bg-white text-black px-4 focus:outline-none focus:ring-1 focus:ring-[#3b82f6]"
+            placeholder="Enter your password"
+            required
+          />
+        </div>
+        <button
+          type="submit"
+          className="w-full bg-amber-50 hover:bg-amber-50/90 cursor-pointer h-10 rounded-lg font-bold text-black"
+          disabled={isLoading} // Disable button during loading
+        >
+          {isLoading ? "Signing up..." : "Sign up"}
+        </button>
+        {error && <p className="text-red-500 text-sm">{error}</p>}{" "}
+        {/* Display error */}
+      </form>
+    </div>
   );
 }

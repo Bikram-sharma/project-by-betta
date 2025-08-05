@@ -16,7 +16,7 @@ const handler = NextAuth({
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          return null;
+          throw new Error("Missing email or password");
         }
 
         const user = await db("users")
@@ -24,7 +24,7 @@ const handler = NextAuth({
           .first();
 
         if (!user) {
-          return null;
+          throw new Error("No user found with that email");
         }
 
         const isValid = await bcrypt.compare(
@@ -32,7 +32,7 @@ const handler = NextAuth({
           user.password
         );
         if (!isValid) {
-          return null;
+          throw new Error("Invalid password");
         }
 
         return { id: user.id, name: user.name, email: user.email };

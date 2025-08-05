@@ -135,7 +135,7 @@ export default function Registration() {
 
         <button
           type="submit"
-          className="w-full h-12 rounded-lg font-bold bg-amber-50 hover:bg-amber-100 text-black px-4 focus:outline-none focus:ring-2 focus:ring-amber-300 col-span-1 md:col-span-2 mt-2 disabled:opacity-70 disabled:cursor-not-allowed transition-all"
+          className="w-full h-12 rounded-lg font-bold bg-amber-50 hover:bg-amber-100 text-black px-4 focus:outline-none focus:ring-2 focus:ring-amber-300 col-span-1 md:col-span-2 mt-2 disabled:opacity-70 disabled:cursor-not-allowed transition-all cursor-pointer"
           disabled={isLoading}
         >
           {isLoading ? (

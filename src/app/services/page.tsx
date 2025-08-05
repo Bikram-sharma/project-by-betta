@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import Card from "@/app/components/card";
+import { redirect } from "next/navigation";
 
 export default function Deskboard() {
   const { data: session, status } = useSession();
@@ -10,7 +11,7 @@ export default function Deskboard() {
 
   useEffect(() => {
     if (status === "unauthenticated") {
-      signIn(); // Redirect to login if not authenticated
+      redirect("/auth/login");
     }
   }, [status]);
 
@@ -19,12 +20,11 @@ export default function Deskboard() {
   }
 
   if (!session) {
-    return null; // Or a message like "Access Denied"
+    return null;
   }
 
   const handleSearch = () => {
     console.log("Searching for:", searchTerm);
-    // Add your search logic here
   };
 
   return (
