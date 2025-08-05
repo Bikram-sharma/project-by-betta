@@ -36,12 +36,10 @@ export default function ServiceProviderDashboard() {
     }
   }, [session]);
 
-  // If loading session
   if (status === "loading") return <div className="p-4">Loading...</div>;
 
-  // If not logged in
   if (status === "unauthenticated") {
-    redirect("/auth/login"); // Make sure this route exists
+    redirect("/auth/login");
   }
 
   return (
@@ -76,7 +74,7 @@ export default function ServiceProviderDashboard() {
               </div>
 
               <Link
-                href="/auth/service-registration"
+                href="/registration"
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-center block"
               >
                 Register as Service Provider
