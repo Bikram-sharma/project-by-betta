@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-// import { signIn } from "next-auth/react";
+import { signIn } from "next-auth/react";
 
 export default function Login() {
   const router = useRouter();
@@ -18,28 +18,29 @@ export default function Login() {
     const formData = new FormData(form);
     const data = Object.fromEntries(formData);
 
-    // try {
-    //   const result = await signIn("credentials", {
-    //     redirect: false,
-    //     email: data.email as string,
-    //     password: data.password as string,
-    //     callbackUrl: "/protected",
-    //   });
+    try {
+      const result = await signIn("credentials", {
+        redirect: false,
+        email: data.email as string,
+        password: data.password as string,
+        callbackUrl: "/dashboard",
+      });
 
-    //   if (result?.error) {
-    //     setError("Failed to log in. Please check your credentials.");
-    //   } else if (result?.url) {
-    //     form.reset();
-    //     console.log(result.url);
-    //     alert("Login successful!");
-    //     router.push(result.url);
-    //   }
-    // } catch (error) {
-    //   console.error("Error during login:", error);
-    //   setError("Login failed. Please try again.");
-    // } finally {
-    //   setIsLoading(false);
-    // }
+      if (result?.error) {
+        console.log(result.error);
+        setError("Failed to log in. Please check your credentials.");
+      } else if (result?.url) {
+        form.reset();
+        console.log(result.url);
+        alert("Login successful!");
+        router.push(result.url);
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      setError("Login failed. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
