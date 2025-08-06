@@ -73,7 +73,9 @@ export default function Carousel({ autoPlay = true, autoPlayInterval = 5000 }) {
   };
 
   return (
+
     <div className="relative overflow-hidden w-[50vw] h-[60vh] mx-auto my-20">
+
       <div
         className="flex transition-transform duration-700"
         style={{ transform: `translateX(-${current * 100}%)` }}
