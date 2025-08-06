@@ -5,7 +5,7 @@ import { useSession, signOut } from "next-auth/react";
 import Card from "@/app/components/card";
 import { redirect } from "next/navigation";
 
-export default function Deskboard() {
+export default function Dashboard() {
   const { data: session, status } = useSession();
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -16,7 +16,11 @@ export default function Deskboard() {
   }, [status]);
 
   if (status === "loading") {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
   }
 
   if (!session) {
@@ -28,80 +32,77 @@ export default function Deskboard() {
   };
 
   return (
-    <main>
-      <div className="h-25 w-full">
-        <div>
-          <h1 className="text-3xl text-black">Name</h1>
-        </div>
-        <div className="flex items-center justify-center gap-2 mt-2 p-2">
-          <input
-            type="text"
-            placeholder="Type to search..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="px-50 py-2 text-black border rounded-lg focus:outline-none focus:border-blue-100 hover:bg-blue-500"
-          />
-          <button
-            onClick={handleSearch}
-            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-500 transition duration-200"
-          >
-            Search
-          </button>
+    <main className="min-h-screen bg-gray-50">
+      {/* Top Navigation Bar */}
+      <div className="bg-blue-600 text-white p-4 shadow-md">
+        <div className="container mx-auto flex justify-between items-center">
+          <h1 className="text-2xl font-bold">Welcome, {session.user?.name || "User"}!</h1>
+          <div className="flex items-center space-x-4">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search services..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="px-4 py-2 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-blue-300 w-64"
+              />
+              <button
+                onClick={handleSearch}
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-blue-600 hover:text-blue-800"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* image and Name */}
-      <div className="flex gap-30">
-        <div className="flex flex-col rounded-md justify-start items-start h-full w-[200px] bg-[#1373E6] mt-4 p-5 gap-15 text-black">
-          <h2 className=" text-white text-4xl font-bold">Service Panel</h2>
-          <nav className="text-white text-2xl flex flex-col gap-10 w-full ">
-            <a href="/messages" className="hover:underline">
-              💬 Messages / Chat
-            </a>
-            <a href="/support" className="hover:underline">
-              ❓ Help and Support
-            </a>
-            <a href="/reviews" className="hover:underline">
-              ⭐ Customer Reviews
-            </a>
-            <a href="/notifications" className="hover:underline">
-              🔔 Notifications
-            </a>
-            <a href="/profile" className="hover:underline">
-              👤 Profile
-            </a>
-            <a href="/security" className="hover:underline">
-              🔒 Privacy & Security
-            </a>
-            <a href="/settings" className="hover:underline">
-              ⚙️ Settings
-            </a>
-            <a href="/analytics" className="hover:underline">
-              📊 Analytics / Reports
-            </a>
+      {/* Main Content */}
+      <div className="container mx-auto flex flex-col md:flex-row gap-6 p-4">
+        {/* Sidebar Navigation */}
+        <div className="bg-blue-600 rounded-lg shadow-md w-full md:w-64 p-4 flex-shrink-0">
+          <h2 className="text-white text-2xl font-bold mb-6 pb-2 border-b border-blue-400">Service Panel</h2>
+          
+          <nav className="space-y-4">
+            {[
+              { icon: "💬", label: "Messages / Chat", href: "/messages" },
+              { icon: "❓", label: "Help and Support", href: "/support" },
+              { icon: "⭐", label: "Customer Reviews", href: "/reviews" },
+              { icon: "🔔", label: "Notifications", href: "/notifications" },
+              { icon: "👤", label: "Profile", href: "/profile" },
+              { icon: "🔒", label: "Privacy & Security", href: "/security" },
+              { icon: "⚙️", label: "Settings", href: "/settings" },
+              { icon: "📊", label: "Analytics / Reports", href: "/analytics" },
+            ].map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                className="flex items-center space-x-3 text-white hover:bg-blue-500 px-3 py-2 rounded-md transition-colors duration-200"
+              >
+                <span className="text-xl">{item.icon}</span>
+                <span className="text-lg">{item.label}</span>
+              </a>
+            ))}
           </nav>
 
           <button
-            className=" flex items-center gap-2 text-black hover:text-red-600 mt-auto"
             onClick={() => signOut()}
+            className="mt-8 w-full flex items-center justify-center space-x-2 bg-white text-blue-600 hover:bg-gray-100 px-4 py-2 rounded-md font-medium transition-colors duration-200"
           >
-            🚪 Logout
+            <span>🚪</span>
+            <span>Logout</span>
           </button>
         </div>
 
-        <div className="flex justify-end">
-          <section className="grid grid-cols-5 pd-2 gap-4 mt-2 p-5">
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-          </section>
+        {/* Main Dashboard Content */}
+        <div className="flex-1">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {Array.from({ length: 10 }).map((_, index) => (
+              <Card key={index} />
+            ))}
+          </div>
         </div>
       </div>
     </main>
