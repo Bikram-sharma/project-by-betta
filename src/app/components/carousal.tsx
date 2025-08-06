@@ -16,7 +16,7 @@ const slides = [
     alt: " ",
   },
   {
-    src: "/image/third3.jpeg",
+    src: "/image/thirddd.jpg",
     title: "Only the Best Get In.",
     description:
       "All service providers are verified, rated, and reviewed by real clients. BETTA puts quality and trust first.",
