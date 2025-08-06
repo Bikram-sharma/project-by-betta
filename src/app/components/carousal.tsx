@@ -74,7 +74,7 @@ export default function Carousel({ autoPlay = true, autoPlayInterval = 5000 }) {
 
   return (
 
-    <div className="relative overflow-hidden w-full h-[800px] ">
+    <div className="relative overflow-hidden w-full h-[700px] ">
       {/* Slides */}
 
       <div
