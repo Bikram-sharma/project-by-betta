@@ -5,7 +5,7 @@ import Carousel from "@/app/components/carousal";
 export default function Home() {
   return (
     <main className="bg-yellow-50 min-h-screen">
-      <div className="w-full h-100">
+      <div className="w-full h-200">
         <Carousel/>
       </div>
       <div className="flex mt-2 p-6">

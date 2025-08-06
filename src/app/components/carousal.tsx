@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 
 const slides = [
   {
-    src: "/image/first.jpg",
+    src: "/image/first1.jpg",
     title: '"We found a local plumber in 10 minutes — no calls, no hassle."',
     description:
       "BETTA helps families, businesses, and individuals connect with trusted local professionals — fast.",
@@ -16,7 +16,7 @@ const slides = [
     alt: " ",
   },
   {
-    src: "/image/third.jpg",
+    src: "/image/third3.jpeg",
     title: "Only the Best Get In.",
     description:
       "All service providers are verified, rated, and reviewed by real clients. BETTA puts quality and trust first.",
@@ -74,7 +74,8 @@ export default function Carousel({ autoPlay = true, autoPlayInterval = 5000 }) {
 
   return (
 
-    <div className="relative overflow-hidden w-[50vw] h-[60vh] mx-auto my-20">
+    <div className="relative overflow-hidden w-full h-[800px] ">
+      {/* Slides */}
 
       <div
         className="flex transition-transform duration-700"
@@ -85,7 +86,7 @@ export default function Carousel({ autoPlay = true, autoPlayInterval = 5000 }) {
         {slides.map((slide, idx) => (
           <div
             key={idx}
-            className="min-w-full h-64 md:h-96 relative flex-shrink-0 bg-cover bg-[center_20%]"
+            className="min-w-full h-[800px] relative flex-shrink-0 bg-cover bg-[center_20%]"
             style={{ backgroundImage: `url(${slide.src})` }}
           >
             <div className="absolute inset-0 flex items-end justify-center bg-gradient-to-t from-black/60 to-transparent ">
