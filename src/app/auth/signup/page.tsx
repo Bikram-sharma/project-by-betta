@@ -7,8 +7,8 @@ import Swal from "sweetalert2";
 
 export default function Signup() {
   const router = useRouter();
-  const [error, setError] = useState<string | null>(null); 
-  const [isLoading, setIsLoading] = useState(false); 
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -28,9 +28,7 @@ export default function Signup() {
         body: JSON.stringify(data),
       });
 
-
-      const result = await response.json(); 
-
+      const result = await response.json();
 
       if (!response.ok) {
         throw new Error(result.message || "Failed to sign up");
@@ -46,19 +44,16 @@ export default function Signup() {
         confirmButtonText: "Let's Go!",
       });
       router.push("/auth/login");
-
     } catch (error: any) {
       console.error("Error during sign up:", error);
       setError(error.message || "Sign up failed. Please try again.");
     } finally {
-
-      setIsLoading(false); 
-
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="bg-[#1373E6] w-[60vw] mx-auto flex justify-between my-10">
+    <div className="w-[60vw] mx-auto flex justify-between py-10">
       <div className="w-[50%] pl-10 flex items-center ">
         <div className="border-r-2">
           <h1 className="text-2xl m-5 pr-5">Welcome to Betta Service!</h1>
@@ -77,7 +72,7 @@ export default function Signup() {
             <li> Book easily</li>
             <li>Chat & collaborate</li>
           </ul>
-          <p className="mr-10 mt-10 p-2 border text-center text-2xl">
+          <p className="mr-10 mt-8 h-10 border text-center text-xl rounded-full flex items-center justify-center">
             Join Betta and grow with us!
           </p>
         </div>
@@ -128,10 +123,8 @@ export default function Signup() {
         </div>
         <button
           type="submit"
-          className="w-full bg-amber-50 hover:bg-amber-50/90 cursor-pointer h-10 rounded-lg font-bold text-black"
-
-          disabled={isLoading} 
-
+          className="w-full bg-[#EA2849] border-2 hover:bg-transparent border-[#EA2849] hover:text-[#EA2849]  cursor-pointer h-10 rounded-full font-bold"
+          disabled={isLoading}
         >
           {isLoading ? "Signing up..." : "Sign up"}
         </button>

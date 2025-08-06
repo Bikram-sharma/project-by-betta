@@ -44,7 +44,7 @@ export default function Login() {
   };
 
   return (
-    <div className="bg-[#1373E6] w-[60vw] mx-auto flex justify-between my-10 ">
+    <div className="w-[60vw] mx-auto flex justify-between py-10 ">
       <div className="w-[50%] pl-10 flex items-center ">
         <div className="border-r-2 py-10">
           <h1 className="text-2xl mb-10 pr-5">
@@ -59,17 +59,17 @@ export default function Login() {
             <li> Connect with clients or professionals</li>
             <li> Update your skills, profile, and availability</li>
           </ul>
-          <p className="mr-10 mt-10 p-2 border text-center text-xl">
+          <p className="mr-10 mt-10 h-10 border text-center text-xl rounded-full px-2 flex items-center justify-center">
             Opportunities are open, dive back in!
           </p>
         </div>
       </div>
       <form
         onSubmit={handleSubmit}
-        className="bg-[#1373E6] w-[30vw] h-[70vh]   rounded-2xl grid grid-cols-1 grid-rows-5 gap-4 p-8 place-items-center relative"
+        className="w-[30vw] h-[70vh]  rounded-2xl grid grid-cols-1 grid-rows-5 gap-4 px-8 pt-15  place-items-center relative"
       >
         <Link
-          href={"/auth/signup"} 
+          href={"/auth/signup"}
           className="absolute top-4 right-8 hover:underline cursor-pointer"
         >
           Sign up
@@ -99,7 +99,7 @@ export default function Login() {
         </div>
         <button
           type="submit"
-          className="w-full bg-amber-50 hover:bg-amber-50/90 cursor-pointer h-10 rounded-lg font-bold text-black"
+          className="w-full mt-10 bg-[#EA2849] border-2 border-[#EA2849] hover:bg-transparent hover:text-[#EA2849] cursor-pointer h-10 rounded-full font-bold"
           disabled={isLoading}
         >
           {isLoading ? "Logging in..." : "Login"}

@@ -24,3 +24,21 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+.swal-confirm-btn {
+  border-radius: 9999px !important; /* rounded-full */
+  padding: 0.5rem 1.5rem; /* adjust padding as needed */
+  background-color: #ea2849 !important;
+  color: white !important;
+  border: none;
+}
+
+.swal-confirm-btn:hover {
+  background-color: #c31f3c !important;
+}
+
+.swal-cancel-btn {
+  border-radius: 9999px !important;
+  padding: 0.5rem 1.5rem;
+  background-color: #ccc !important;
+  color: black !important;
+}

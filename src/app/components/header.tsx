@@ -8,27 +8,23 @@ export default function Header() {
   const { data: session, status } = useSession();
 
   return (
-    <header className="bg-blue-900 flex items-center justify-between px-8 py-4 shadow w-full sticky top-0 h-[10vh] z-10">
-      <div className="flex items-center space-x-2 bg-[url('/image/logo.png')] h-20 w-20 rounded-md bg-cover bg-center"></div>
+    <header className="bg-white flex items-center justify-between px-8 py-4 shadow w-full sticky top-0 h-[10vh] z-10">
+      <div className="flex items-center space-x-2 bg-[url('/image/logo.png')] h-15 w-15 border-2 border-[#EA2849] rounded-md bg-cover bg-center"></div>
 
       <nav className="space-x-4">
-          <Button link='/'>Home</Button> 
-        
+        <Button link="/">Home</Button>
+
         {status === "loading" ? null : session ? (
           <>
-             <Button link='/dashboard'> Dashboard</Button>
-            <button
-              onClick={() => signOut({ callbackUrl: "/" })}
-              className="bg-white text-black rounded-md h-10 w-20 hover:bg-gray-300 cursor-pointer transition"
-            >
-              Logout
-            </button>
+            <Button link="/dashboard">Dashboard</Button>
+            <span onClick={() => signOut({ callbackUrl: "/" })}>
+              <Button link="/">Logout</Button>
+            </span>
           </>
         ) : (
           <>
-          <Button link='/auth/signup'>SignUp</Button> 
-          <Button link='/auth/login'>Login</Button>
-          
+            <Button link="/auth/signup">SignUp</Button>
+            <Button link="/auth/login">Login</Button>
           </>
         )}
       </nav>
