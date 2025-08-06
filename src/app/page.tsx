@@ -5,6 +5,9 @@ import Carousel from "@/app/components/carousal";
 export default function Home() {
   return (
     <main className="bg-yellow-50 min-h-screen">
+      <div className="w-full h-180">
+        <Carousel/>
+      </div>
       <div className="flex mt-2 p-6">
         <div className=" w-1/2 p-2 bg-[url('/img/logo1.png')] bg-cover bg-center  relative">
           <div className="absolute inset-0 bg-yellow-50/95  text-white flex flex-col justify-center p-5">

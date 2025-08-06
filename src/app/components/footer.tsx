@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="bg-[#1373E6] px-4 text-white text-center py-6 w-full h-[35vh]">
+    <footer className="bg-blue-900 px-4 text-white text-center py-6 w-full h-[35vh]">
       <div className="grid grid-cols-3 place-items-center">
         <div className="w-full h-full  border-2 p-2 flex items-center ">
           <img src="/image/logo.png" alt="" className="w-40 h-40" />

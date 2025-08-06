@@ -58,7 +58,6 @@ export default function Registration() {
           Freelancer Registration
         </h2>
 
-        {/* Input Fields */}
         <div className="w-full">
           <label htmlFor="full-name" className="block mb-1 text-white">
             Full Name
@@ -133,6 +132,20 @@ export default function Registration() {
           />
         </div>
 
+        <div className="w-full">
+          <label htmlFor="location" className="block mb-1 text-white">
+            Phone Number
+          </label>
+          <input
+            type="text"
+            name="phone-no"
+            id="phone-no"
+            className="w-full h-10 rounded-lg bg-white text-black px-4 focus:outline-none focus:ring-2 focus:ring-amber-300"
+            placeholder="123-456-7890"
+            required
+          />
+        </div>
+
         <button
           type="submit"
           className="w-full h-12 rounded-lg font-bold bg-amber-50 hover:bg-amber-100 text-black px-4 focus:outline-none focus:ring-2 focus:ring-amber-300 col-span-1 md:col-span-2 mt-2 disabled:opacity-70 disabled:cursor-not-allowed transition-all cursor-pointer"
@@ -174,7 +187,6 @@ export default function Registration() {
         )}
       </form>
 
-      {/* Confirmation Modal */}
       {showWarning && (
         <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-lg max-w-md w-full p-6 shadow-xl">

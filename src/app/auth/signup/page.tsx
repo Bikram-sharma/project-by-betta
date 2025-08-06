@@ -7,8 +7,8 @@ import Swal from "sweetalert2";
 
 export default function Signup() {
   const router = useRouter();
-  const [error, setError] = useState<string | null>(null); // Added state for error handling
-  const [isLoading, setIsLoading] = useState(false); // Added state for loading
+  const [error, setError] = useState<string | null>(null); 
+  const [isLoading, setIsLoading] = useState(false); 
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -28,13 +28,16 @@ export default function Signup() {
         body: JSON.stringify(data),
       });
 
-      const result = await response.json();
+
+      const result = await response.json(); 
+
 
       if (!response.ok) {
         throw new Error(result.message || "Failed to sign up");
       }
 
       form.reset();
+
       Swal.fire({
         title: "🎉 Signup Successful!",
         text: "Welcome to Betta Service! You can now log in and get started.",
@@ -43,11 +46,14 @@ export default function Signup() {
         confirmButtonText: "Let's Go!",
       });
       router.push("/auth/login");
+
     } catch (error: any) {
       console.error("Error during sign up:", error);
       setError(error.message || "Sign up failed. Please try again.");
     } finally {
-      setIsLoading(false);
+
+      setIsLoading(false); 
+
     }
   };
 
@@ -123,7 +129,9 @@ export default function Signup() {
         <button
           type="submit"
           className="w-full bg-amber-50 hover:bg-amber-50/90 cursor-pointer h-10 rounded-lg font-bold text-black"
-          disabled={isLoading}
+
+          disabled={isLoading} 
+
         >
           {isLoading ? "Signing up..." : "Sign up"}
         </button>

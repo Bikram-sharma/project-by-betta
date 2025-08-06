@@ -5,6 +5,7 @@ import { useSession, signOut } from "next-auth/react";
 import Card from "@/app/components/card";
 import { redirect } from "next/navigation";
 
+
 export default function ServicesPage() {
   type ServiceProvider = {
     name: string;
@@ -13,6 +14,9 @@ export default function ServicesPage() {
     location: string;
     rate: string;
   };
+
+
+
   const { data: session, status } = useSession();
   const [searchTerm, setSearchTerm] = useState("");
   const [cardData, setCardData] = useState<ServiceProvider[]>([]);
@@ -22,6 +26,7 @@ export default function ServicesPage() {
       redirect("/auth/login");
     }
   }, [status]);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,6 +54,9 @@ export default function ServicesPage() {
     fetchData();
   }, []);
 
+ 
+
+
   if (status === "loading") return <div>Loading...</div>;
   if (!session) return null;
 
@@ -58,27 +66,33 @@ export default function ServicesPage() {
   };
 
   return (
-    <main>
-      <div className="h-25 w-full">
-        <div>
-          <h1 className="text-3xl text-black">Name</h1>
-        </div>
-        <div className="flex items-center justify-center gap-2 mt-2 p-2">
-          <input
-            type="text"
-            placeholder="Type to search..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="px-50 py-2 text-black border rounded-lg focus:outline-none focus:border-blue-100 hover:bg-blue-500"
-          />
-          <button
-            onClick={handleSearch}
-            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-500 transition duration-200"
-          >
-            Search
-          </button>
+
+    <main className="min-h-screen bg-gray-50">
+      <div className="bg-blue-600 text-white p-4 shadow-md">
+        <div className="container text-black bg-white mx-auto flex justify-between items-center">
+          <h1 className="text-2xl font-bold">Welcome, {session.user?.name || "User"}!</h1>
+          <div className="flex items-center space-x-4">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search services..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="px-4 py-2 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-blue-300 w-64"
+              />
+              <button
+                onClick={handleSearch}
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-blue-600 hover:text-blue-800"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
+
 
       {/* Sidebar + Cards */}
       <div className="flex gap-30">
@@ -114,11 +128,15 @@ export default function ServicesPage() {
 
           <button
             className="flex items-center gap-2 text-black hover:text-red-600 mt-auto"
+
             onClick={() => signOut()}
+            className="mt-8 w-full flex items-center justify-center space-x-2 bg-white text-blue-600 hover:bg-gray-100 px-4 py-2 rounded-md font-medium transition-colors duration-200"
           >
-            🚪 Logout
+            <span>🚪</span>
+            <span>Logout</span>
           </button>
         </div>
+
 
         {/* Card Grid */}
         <div className="flex justify-end">
@@ -138,6 +156,9 @@ export default function ServicesPage() {
               <p className="text-black">No service providers found.</p>
             )}
           </section>
+
+       
+
         </div>
       </div>
     </main>
