@@ -79,7 +79,7 @@ export default function Carousel({ autoPlay = true, autoPlayInterval = 5000 }) {
 
       <div
         className="flex transition-transform duration-700"
-        style={{ transform: `translateX(-${current * 100}%)` }}
+        style={{ transform:`translateX(-${current * 100}%)` }}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
@@ -87,10 +87,9 @@ export default function Carousel({ autoPlay = true, autoPlayInterval = 5000 }) {
           <div
             key={idx}
             className="min-w-full h-[800px] relative flex-shrink-0 bg-cover bg-[center_20%]"
-            style={{ backgroundImage: `url(${slide.src})` }}
-          >
+            style={{ backgroundImage:`url(${slide.src})`}}>
             <div className="absolute inset-0 flex items-end justify-center bg-gradient-to-t from-black/60 to-transparent ">
-              <div className="text-white  bg-black/40 text-center px-5">
+              <div className="text-white bg-black/40 text-center px-5">
                 <h2 className="text-2xl font-bold">{slide.title}</h2>
                 <p className="text-lg mt-1">{slide.description}</p>
               </div>
