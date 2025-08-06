@@ -17,12 +17,13 @@ export default function Header() {
         {status === "loading" ? null : session ? (
           <>
              <Button link='/dashboard'> Dashboard</Button>
-            <button
+            {/* <button
               onClick={() => signOut({ callbackUrl: "/" })}
               className="bg-white text-black rounded-md h-10 w-20 hover:bg-gray-300 cursor-pointer transition"
             >
               Logout
-            </button>
+            </button> */}
+            <Button link="/Logout">Logout</Button>
           </>
         ) : (
           <>
