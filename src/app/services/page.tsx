@@ -32,6 +32,7 @@ export default function Dashboard() {
   };
 
   return (
+
     <main className="min-h-screen bg-gray-50">
       {/* Top Navigation Bar */}
       <div className="bg-blue-600 text-white p-4 shadow-md">
@@ -85,6 +86,7 @@ export default function Dashboard() {
                 <span className="text-lg">{item.label}</span>
               </a>
             ))}
+
           </nav>
 
           <button
