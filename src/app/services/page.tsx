@@ -31,7 +31,7 @@ export default function Deskboard() {
     <main>
       <div className="h-25 w-full">
         <div>
-          <h1 className="text-3xl text-black">Name</h1>
+          <a href="" className="text-3xl text-black">Name</a>
         </div>
         <div className="flex items-center justify-center gap-2 mt-2 p-2">
           <input
@@ -52,9 +52,9 @@ export default function Deskboard() {
 
       {/* image and Name */}
       <div className="flex gap-30">
-        <div className="flex flex-col rounded-md justify-start items-start h-full w-[200px] bg-[#1373E6] mt-4 p-5 gap-15 text-black">
+        <div className="flex flex-col rounded-md justify-start items-start h-full w-[200px] bg-[#1373E6] mt-4 p-5 gap-15 text-black mb-2">
           <h2 className=" text-white text-4xl font-bold">Service Panel</h2>
-          <nav className="text-white text-2xl flex flex-col gap-10 w-full ">
+          <nav className="text-white text-xl flex flex-col gap-10 w-full ">
             <a href="/messages" className="hover:underline">
               💬 Messages / Chat
             </a>
