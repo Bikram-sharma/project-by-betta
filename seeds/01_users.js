@@ -51,7 +51,8 @@ export async function seed(knex) {
       email: "choszom@gmail.com",
       password: await bcrypt.hash("admin123", 10),
       role: "user",
-    },{
+    },
+    {
       name: "Dawa",
       email: "dawa2050@gmail.com",
       password: await bcrypt.hash("admin123", 10),
@@ -74,6 +75,6 @@ export async function seed(knex) {
       email: "tphuntsho@gmail.com",
       password: await bcrypt.hash("admin123", 10),
       role: "user",
-    }
+    },
   ]);
 }

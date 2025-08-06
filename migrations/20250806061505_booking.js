@@ -1,17 +1,29 @@
 exports.up = function (knex) {
-  return knex.schema.createTable("booking", function (table) {
+  return knex.schema.createTable("bookings", function (table) {
     table.increments("id").primary();
-    table.integer('client_id').unsigned();
-    table.foreign('client_id').references('id').inTable('clients');
-    table.integer('provider_id').unsigned();
-    table.foreign('provider_id').references('id').inTable('service_providers');
-    table.integer('service_id').unsigned();
-    table.foreign('service_id').references('id').inTable('services');
-    table.datetime('booked_time').notNullable();
+    table
+      .integer("client_id")
+      .unsigned()
+      .references("id")
+      .inTable("clients")
+      .onDelete("CASCADE");
+    table
+      .integer("provider_id")
+      .unsigned()
+      .references("id")
+      .inTable("service_providers")
+      .onDelete("CASCADE");
+    table
+      .integer("service_id")
+      .unsigned()
+      .references("id")
+      .inTable("services")
+      .onDelete("SET NULL");
+    table.datetime("booked_time").notNullable();
     table.timestamps(true, true);
   });
 };
 
 exports.down = function (knex) {
-  return knex.dropTable("booking");
+  return knex.schema.dropTable("bookings");
 };

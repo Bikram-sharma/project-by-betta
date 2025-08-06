@@ -1,40 +1,47 @@
-// /pages/api/service-providers.ts
+import { NextRequest, NextResponse } from "next/server";
+import knex from "knex";
+import knexConfig from "../../../../knexfile";
 
-import type { NextApiRequest, NextApiResponse } from "next";
+const db = knex(knexConfig.development);
 
-export async function POST(req: NextApiRequest, res: NextApiResponse) {
-  // const { service, location } = req.body;
+export async function GET(req: NextRequest) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const skill = searchParams.get("skill");
+    const location = searchParams.get("location");
 
-  // Simulated database query — replace with real DB access
-  const fakeDB = [
-    {
-      name: "Phuntsho Wangmo",
-      skill: "Frontend Developer",
-      experience: "3+ years",
-      location: "Thimphu, Bhutan",
-      rate: "$35/hr",
-    },
-    {
-      name: "Karma Dorji",
-      skill: "Plumber",
-      experience: "5 years",
-      location: "Paro, Bhutan",
-      rate: "$25/hr",
-    },
-    {
-      name: "Sonam Lhamo",
-      skill: "Electrician",
-      experience: "2 years",
-      location: "Thimphu, Bhutan",
-      rate: "$20/hr",
-    },
-  ];
+    console.log(skill);
 
-  // const results = fakeDB.filter(
-  //   (item) =>
-  //     item.skill.toLowerCase().includes(service?.toLowerCase()) &&
-  //     item.location.toLowerCase().includes(location?.toLowerCase())
-  // );
+    if (!skill || !location) {
+      return NextResponse.json(
+        { error: "Missing skill or location query parameter" },
+        { status: 400 }
+      );
+    }
 
-  return Response.json(fakeDB);
+    const providers = await db("service_providers")
+      .where("skill", skill)
+      .select(
+        "id",
+        "full_name",
+        "skill",
+        "rate",
+        "experience",
+        "location",
+        "user_id"
+      );
+
+    return new Response(JSON.stringify(providers), {
+      status: 200,
+      headers: {
+        "Cache-Control": "no-store",
+      },
+    });
+  } catch (error) {
+    console.error("Error fetching service providers:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
 }
