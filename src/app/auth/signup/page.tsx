@@ -116,12 +116,11 @@ export default function Signup() {
         <button
           type="submit"
           className="w-full bg-amber-50 hover:bg-amber-50/90 cursor-pointer h-10 rounded-lg font-bold text-black"
-          disabled={isLoading} // Disable button during loading
+          disabled={isLoading} 
         >
           {isLoading ? "Signing up..." : "Sign up"}
         </button>
         {error && <p className="text-red-500 text-sm">{error}</p>}{" "}
-        {/* Display error */}
       </form>
     </div>
   );

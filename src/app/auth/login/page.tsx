@@ -69,13 +69,12 @@ export default function Login() {
         className="bg-[#1373E6] w-[30vw] h-[70vh]   rounded-2xl grid grid-cols-1 grid-rows-5 gap-4 p-8 place-items-center relative"
       >
         <Link
-          href={"/auth/signup"} // Update to your actual sign-up route
+          href={"/auth/signup"} 
           className="absolute top-4 right-8 hover:underline cursor-pointer"
         >
           Sign up
         </Link>
         <h2 className="text-3xl">Login</h2>{" "}
-        {/* Use heading instead of legend */}
         <div className="w-full">
           <label htmlFor="email">Email</label>
           <input

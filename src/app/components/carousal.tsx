@@ -59,7 +59,6 @@ export default function Carousel({ autoPlay = true, autoPlayInterval = 5000 }) {
     setCurrent((c) => (c + 1) % length);
   };
 
-  // Swipe support (basic)
   const startX = useRef(0);
   const handleTouchStart = (e: React.TouchEvent<HTMLElement>) => {
     startX.current = e.touches[0].clientX;
@@ -74,8 +73,9 @@ export default function Carousel({ autoPlay = true, autoPlayInterval = 5000 }) {
   };
 
   return (
-    <div className="relative overflow-hidden w-full h-100">
-      {/* Slides */}
+
+    <div className="relative overflow-hidden w-[50vw] h-[60vh] mx-auto my-20">
+
       <div
         className="flex transition-transform duration-700"
         style={{ transform: `translateX(-${current * 100}%)` }}
@@ -88,7 +88,6 @@ export default function Carousel({ autoPlay = true, autoPlayInterval = 5000 }) {
             className="min-w-full h-64 md:h-96 relative flex-shrink-0 bg-cover bg-[center_20%]"
             style={{ backgroundImage: `url(${slide.src})` }}
           >
-            {/* Text overlay */}
             <div className="absolute inset-0 flex items-end justify-center bg-gradient-to-t from-black/60 to-transparent ">
               <div className="text-white  bg-black/40 text-center px-5">
                 <h2 className="text-2xl font-bold">{slide.title}</h2>
@@ -99,7 +98,6 @@ export default function Carousel({ autoPlay = true, autoPlayInterval = 5000 }) {
         ))}
       </div>
 
-      {/* Prev / Next buttons */}
       <button
         aria-label="Previous slide"
         onClick={prev}
@@ -115,7 +113,6 @@ export default function Carousel({ autoPlay = true, autoPlayInterval = 5000 }) {
         ›
       </button>
 
-      {/* Indicators */}
       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
         {slides.map((_, i) => (
           <button
