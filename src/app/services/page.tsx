@@ -33,7 +33,6 @@ export default function Dashboard() {
 
   return (
     <main className="min-h-screen bg-gray-50">
-      {/* Top Navigation Bar */}
       <div className="bg-blue-600 text-white p-4 shadow-md">
         <div className="container mx-auto flex justify-between items-center">
           <h1 className="text-2xl font-bold">Welcome, {session.user?.name || "User"}!</h1>
@@ -59,9 +58,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="container mx-auto flex flex-col md:flex-row gap-6 p-4">
-        {/* Sidebar Navigation */}
         <div className="bg-blue-600 rounded-lg shadow-md w-full md:w-64 p-4 flex-shrink-0">
           <h2 className="text-white text-2xl font-bold mb-6 pb-2 border-b border-blue-400">Service Panel</h2>
           
@@ -96,7 +93,6 @@ export default function Dashboard() {
           </button>
         </div>
 
-        {/* Main Dashboard Content */}
         <div className="flex-1">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {Array.from({ length: 10 }).map((_, index) => (
