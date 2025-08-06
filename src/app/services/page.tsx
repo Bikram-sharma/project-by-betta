@@ -5,7 +5,6 @@ import { useSession, signOut } from "next-auth/react";
 import Card from "@/app/components/card";
 import { redirect } from "next/navigation";
 
-
 export default function ServicesPage() {
   type ServiceProvider = {
     name: string;
@@ -14,8 +13,6 @@ export default function ServicesPage() {
     location: string;
     rate: string;
   };
-
-
 
   const { data: session, status } = useSession();
   const [searchTerm, setSearchTerm] = useState("");
@@ -26,7 +23,6 @@ export default function ServicesPage() {
       redirect("/auth/login");
     }
   }, [status]);
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,9 +50,6 @@ export default function ServicesPage() {
     fetchData();
   }, []);
 
- 
-
-
   if (status === "loading") return <div>Loading...</div>;
   if (!session) return null;
 
@@ -66,11 +59,12 @@ export default function ServicesPage() {
   };
 
   return (
-
     <main className="min-h-screen bg-gray-50">
       <div className="bg-blue-600 text-white p-4 shadow-md">
         <div className="container text-black bg-white mx-auto flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Welcome, {session.user?.name || "User"}!</h1>
+          <h1 className="text-2xl font-bold">
+            Welcome, {session.user?.name || "User"}!
+          </h1>
           <div className="flex items-center space-x-4">
             <div className="relative">
               <input
@@ -84,15 +78,25 @@ export default function ServicesPage() {
                 onClick={handleSearch}
                 className="absolute right-2 top-1/2 transform -translate-y-1/2 text-blue-600 hover:text-blue-800"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
                 </svg>
               </button>
             </div>
           </div>
         </div>
       </div>
-
 
       {/* Sidebar + Cards */}
       <div className="flex gap-30">
@@ -127,8 +131,6 @@ export default function ServicesPage() {
           </nav>
 
           <button
-            className="flex items-center gap-2 text-black hover:text-red-600 mt-auto"
-
             onClick={() => signOut()}
             className="mt-8 w-full flex items-center justify-center space-x-2 bg-white text-blue-600 hover:bg-gray-100 px-4 py-2 rounded-md font-medium transition-colors duration-200"
           >
@@ -136,7 +138,6 @@ export default function ServicesPage() {
             <span>Logout</span>
           </button>
         </div>
-
 
         {/* Card Grid */}
         <div className="flex justify-end">
@@ -156,9 +157,6 @@ export default function ServicesPage() {
               <p className="text-black">No service providers found.</p>
             )}
           </section>
-
-       
-
         </div>
       </div>
     </main>
