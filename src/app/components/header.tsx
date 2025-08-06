@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
+import Button from "../components/button";
 
 export default function Header() {
   const { data: session, status } = useSession();
@@ -11,19 +12,11 @@ export default function Header() {
       <div className="flex items-center space-x-2 bg-[url('/image/logo.png')] h-20 w-20 rounded-md bg-cover bg-center"></div>
 
       <nav className="space-x-4">
-        <Link href="/">
-          <button className="bg-white text-black rounded-md h-10 w-20 hover:bg-gray-300 cursor-pointer transition">
-            Home
-          </button>
-        </Link>
-
+          <Button link='/'>Home</Button> 
+        
         {status === "loading" ? null : session ? (
           <>
-            <Link href="/dashboard">
-              <button className="bg-white text-black rounded-md h-10 w-24 hover:bg-gray-300 cursor-pointer transition">
-                Dashboard
-              </button>
-            </Link>
+             <Button link='/dashboard'> Dashboard</Button>
             <button
               onClick={() => signOut({ callbackUrl: "/" })}
               className="bg-white text-black rounded-md h-10 w-20 hover:bg-gray-300 cursor-pointer transition"
@@ -33,16 +26,9 @@ export default function Header() {
           </>
         ) : (
           <>
-            <Link href="/auth/signup">
-              <button className="bg-white text-black rounded-md h-10 w-20 hover:bg-gray-300 cursor-pointer transition">
-                SignUp
-              </button>
-            </Link>
-            <Link href="/auth/login">
-              <button className="bg-white text-black rounded-md h-10 w-20 hover:bg-gray-300 cursor-pointer transition">
-                Login
-              </button>
-            </Link>
+          <Button link='/auth/signup'>SignUp</Button> 
+          <Button link='/auth/login'>Login</Button>
+          
           </>
         )}
       </nav>
