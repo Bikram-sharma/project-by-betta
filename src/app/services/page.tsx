@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 
 export default function ServicesPage() {
   type ServiceProvider = {
-    name: string;
+    full_name: string;
     skill: string;
     experience: string;
     location: string;
@@ -28,20 +28,23 @@ export default function ServicesPage() {
     const fetchData = async () => {
       try {
         const stored = sessionStorage.getItem("serviceData");
-        const filters = stored ? JSON.parse(stored) : null;
 
-        const res = await fetch("http://localhost:3000/api/service-providers", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(filters),
-        });
+        const { skill, location } = stored ? JSON.parse(stored) : null;
 
-        if (!res.ok) throw new Error("Failed to fetch service providers");
+        if (skill && location) {
+          const res = await fetch(
+            `http://localhost:3000/api/service-providers?skill=${skill}&location=${location}`,
+            {
+              method: "GET",
+              cache: "no-store",
+            }
+          );
+          if (!res.ok) throw new Error("Failed to fetch service providers");
 
-        const data = await res.json();
-        setCardData(data);
+          const data = await res.json();
+
+          setCardData(data);
+        }
       } catch (error) {
         console.error("Error fetching service providers:", error);
       }
@@ -55,7 +58,6 @@ export default function ServicesPage() {
 
   const handleSearch = () => {
     console.log("Searching for:", searchTerm);
-    // Optional: implement filter here
   };
 
   return (
@@ -146,7 +148,7 @@ export default function ServicesPage() {
               cardData.map((item, index) => (
                 <Card
                   key={index}
-                  name={item.name}
+                  name={item.full_name}
                   skill={item.skill}
                   experience={item.experience}
                   location={item.location}

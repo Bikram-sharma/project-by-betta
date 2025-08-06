@@ -20,12 +20,14 @@ export default function Card({
 
   return (
     <div className=" h-[50vh] w-[15vw] max-w-sm mx-auto mt-15 bg-white shadow-lg rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 transition-shadow hover:shadow-xl">
-      <div className="flex flex-col items-center p-6 mt-10">
-        <img
-          src="/image/profile.jpg"
-          alt="Profile"
-          className="w-24 h-24 rounded-full object-cover border-4 border-white dark:border-gray-800 shadow-md -mt-12"
-        />
+      <div className="flex flex-col items-center p-6">
+        <div className="">
+          <img
+            src="/image/profile.jpg"
+            alt="Profile"
+            className="w-30 h-30 rounded-full"
+          />
+        </div>
         <h2 className="mt-4 text-xl font-semibold text-black">{name}</h2>
         <p className="text-sm text-black">{skill}</p>
 

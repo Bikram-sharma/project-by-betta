@@ -21,7 +21,7 @@ export default function ServiceProviderDashboard() {
 
   const services = [
     "Plumbing",
-    "Electrical",
+    "Electrician",
     "Cleaning",
     "Gardening",
     "AC Repair",
@@ -47,12 +47,12 @@ export default function ServiceProviderDashboard() {
       title: "Provide Service Details",
       html: `
         <label for="service">Service</label>
-        <select id="service" class="swal2-input">
+        <select id="skill" class="swal2-input">
           <option value="" disabled selected>Select a service</option>
-          <option value="Plumbing">Plumbing</option>
+          <option value="Plumber">Plumbing</option>
           <option value="Electrician">Electrician</option>
-          <option value="Cleaning">Cleaning</option>
-          <option value="Painting">Painting</option>
+          <option value="Carpenter">Carpenter</option>
+          <option value="Painter">Painting</option>
         </select>
         <input type="text" id="location" class="swal2-input" placeholder="Enter location">
         <input type="text" id="contact" class="swal2-input" placeholder="Contact No.">
@@ -62,21 +62,20 @@ export default function ServiceProviderDashboard() {
       confirmButtonText: "Submit",
       focusConfirm: false,
       preConfirm: () => {
-        const service = (
-          document.getElementById("service") as HTMLSelectElement
-        )?.value;
+        const skill = (document.getElementById("skill") as HTMLSelectElement)
+          ?.value;
         const location = (
           document.getElementById("location") as HTMLInputElement
         )?.value;
         const contact = (document.getElementById("contact") as HTMLInputElement)
           ?.value;
 
-        if (!service || !location || !contact) {
+        if (!skill || !location || !contact) {
           Swal.showValidationMessage("Please fill in all fields");
           return false;
         }
 
-        return { service, location, contact };
+        return { skill, location, contact };
       },
     }).then((result) => {
       if (result.isConfirmed && result.value) {
