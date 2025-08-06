@@ -32,7 +32,7 @@ export default function Login() {
       } else if (result?.url) {
         form.reset();
         console.log(result.url);
-        alert("Login successful!");
+
         router.push(result.url);
       }
     } catch (error) {

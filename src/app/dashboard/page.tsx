@@ -4,9 +4,13 @@ import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
 
 export default function ServiceProviderDashboard() {
+  const router = useRouter();
   const { data: session, status } = useSession();
+
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -41,6 +45,53 @@ export default function ServiceProviderDashboard() {
   if (status === "unauthenticated") {
     redirect("/auth/login");
   }
+
+  const bookingHandler = () => {
+    Swal.fire({
+      title: "Provide Service Details",
+      html: `
+    <label for="service">Service</label>
+    <select id="service" class="swal2-input">
+      <option value="" disabled selected>Select a service</option>
+      <option value="Plumbing">Plumbing</option>
+      <option value="Electrician">Electrician</option>
+      <option value="Cleaning">Cleaning</option>
+      <option value="Painting">Painting</option>
+    </select>
+
+    <input type="text" id="location" class="swal2-input" placeholder="Enter location">
+    <input type="text" id="contact" class="swal2-input" placeholder="Contact No.">
+  `,
+      cancelButtonText: "Cancel",
+      showCancelButton: true,
+      confirmButtonText: "Submit",
+      focusConfirm: false,
+
+      preConfirm: () => {
+        const service = (
+          document.getElementById("service") as HTMLSelectElement
+        )?.value;
+        const location = (
+          document.getElementById("location") as HTMLInputElement
+        )?.value;
+        const contact = (document.getElementById("contact") as HTMLInputElement)
+          ?.value;
+
+        if (!service || !location || !contact) {
+          Swal.showValidationMessage("Please fill in all fields");
+          return false;
+        }
+
+        return { service, location, contact };
+      },
+    }).then((result) => {
+      if (result.isConfirmed && result.value) {
+        sessionStorage.setItem("serviceData", JSON.stringify(result.value));
+
+        router.push("/services");
+      }
+    });
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -100,11 +151,13 @@ export default function ServiceProviderDashboard() {
                   </div>
                 ))}
               </div>
-              <Link href={"/services"}>
-                <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg">
-                  Book Service
-                </button>
-              </Link>
+
+              <button
+                onClick={bookingHandler}
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg"
+              >
+                Book Service
+              </button>
             </section>
           </div>
 
