@@ -33,7 +33,9 @@ export default function RootLayout({
       >
         <ClientLayout>
           <Header />
-          <div className="min-h-[55vh]">{children}</div>
+          <div className="min-h-[55vh] bg-[url('/image/no_bg_logo.png')]  bg-contain bg-no-repeat bg-center ">
+            <div className="bg-black/93"> {children}</div>
+          </div>
           <Footer />
         </ClientLayout>
       </body>

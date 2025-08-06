@@ -52,7 +52,7 @@ export default function Registration() {
     <>
       <form
         onSubmit={handleSubmit}
-        className="bg-[#1373E6] w-[90%] md:w-[50vw] min-h-[55vh] m-auto mt-10 md:mt-20 mb-20 rounded-2xl grid grid-cols-1 md:grid-cols-2 gap-6 p-6 md:p-8 relative"
+        className="w-[90%] md:w-[50vw] m-auto p-20 rounded-2xl grid grid-cols-1 md:grid-cols-2 gap-6 relative"
       >
         <h2 className="text-2xl md:text-3xl col-span-1 md:col-span-2 text-center font-bold text-white">
           Freelancer Registration
@@ -148,7 +148,7 @@ export default function Registration() {
 
         <button
           type="submit"
-          className="w-full h-12 rounded-lg font-bold bg-amber-50 hover:bg-amber-100 text-black px-4 focus:outline-none focus:ring-2 focus:ring-amber-300 col-span-1 md:col-span-2 mt-2 disabled:opacity-70 disabled:cursor-not-allowed transition-all cursor-pointer"
+          className="w-full h-12 rounded-full font-bold border border-[#EA2849] bg-[#EA2849] hover:text-[#EA2849] hover:bg-transparent px-4 focus:outline-none focus:ring-2 focus:ring-amber-300 col-span-1 md:col-span-2 mt-2 disabled:opacity-70 disabled:cursor-not-allowed transition-all cursor-pointer"
           disabled={isLoading}
         >
           {isLoading ? (
