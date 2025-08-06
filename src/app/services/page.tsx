@@ -5,9 +5,21 @@ import { useSession, signOut } from "next-auth/react";
 import Card from "@/app/components/card";
 import { redirect } from "next/navigation";
 
-export default function Dashboard() {
+
+export default function ServicesPage() {
+  type ServiceProvider = {
+    name: string;
+    skill: string;
+    experience: string;
+    location: string;
+    rate: string;
+  };
+
+
+
   const { data: session, status } = useSession();
   const [searchTerm, setSearchTerm] = useState("");
+  const [cardData, setCardData] = useState<ServiceProvider[]>([]);
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -15,20 +27,42 @@ export default function Dashboard() {
     }
   }, [status]);
 
-  if (status === "loading") {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-      </div>
-    );
-  }
 
-  if (!session) {
-    return null;
-  }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const stored = sessionStorage.getItem("serviceData");
+        const filters = stored ? JSON.parse(stored) : null;
+
+        const res = await fetch("http://localhost:3000/api/service-providers", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(filters),
+        });
+
+        if (!res.ok) throw new Error("Failed to fetch service providers");
+
+        const data = await res.json();
+        setCardData(data);
+      } catch (error) {
+        console.error("Error fetching service providers:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+ 
+
+
+  if (status === "loading") return <div>Loading...</div>;
+  if (!session) return null;
 
   const handleSearch = () => {
     console.log("Searching for:", searchTerm);
+    // Optional: implement filter here
   };
 
   return (
@@ -59,34 +93,42 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="container mx-auto flex flex-col md:flex-row gap-6 p-4">
-        <div className="bg-blue-600 rounded-lg shadow-md w-full md:w-64 p-4 flex-shrink-0">
-          <h2 className="text-white text-2xl font-bold mb-6 pb-2 border-b border-blue-400">Service Panel</h2>
-          
-          <nav className="space-y-4">
-            {[
-              { icon: "💬", label: "Messages / Chat", href: "/messages" },
-              { icon: "❓", label: "Help and Support", href: "/support" },
-              { icon: "⭐", label: "Customer Reviews", href: "/reviews" },
-              { icon: "🔔", label: "Notifications", href: "/notifications" },
-              { icon: "👤", label: "Profile", href: "/profile" },
-              { icon: "🔒", label: "Privacy & Security", href: "/security" },
-              { icon: "⚙️", label: "Settings", href: "/settings" },
-              { icon: "📊", label: "Analytics / Reports", href: "/analytics" },
-            ].map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="flex items-center space-x-3 text-white hover:bg-blue-500 px-3 py-2 rounded-md transition-colors duration-200"
-              >
-                <span className="text-xl">{item.icon}</span>
-                <span className="text-lg">{item.label}</span>
-              </a>
-            ))}
 
+      {/* Sidebar + Cards */}
+      <div className="flex gap-30">
+        {/* Sidebar */}
+        <div className="flex flex-col rounded-md justify-start items-start h-full w-[200px] bg-[#1373E6] mt-4 p-5 gap-15 text-black">
+          <h2 className="text-white text-4xl font-bold">Service Panel</h2>
+          <nav className="text-white text-2xl flex flex-col gap-10 w-full ">
+            <a href="/messages" className="hover:underline">
+              💬 Messages / Chat
+            </a>
+            <a href="/support" className="hover:underline">
+              ❓ Help and Support
+            </a>
+            <a href="/reviews" className="hover:underline">
+              ⭐ Customer Reviews
+            </a>
+            <a href="/notifications" className="hover:underline">
+              🔔 Notifications
+            </a>
+            <a href="/profile" className="hover:underline">
+              👤 Profile
+            </a>
+            <a href="/security" className="hover:underline">
+              🔒 Privacy & Security
+            </a>
+            <a href="/settings" className="hover:underline">
+              ⚙️ Settings
+            </a>
+            <a href="/analytics" className="hover:underline">
+              📊 Analytics / Reports
+            </a>
           </nav>
 
           <button
+            className="flex items-center gap-2 text-black hover:text-red-600 mt-auto"
+
             onClick={() => signOut()}
             className="mt-8 w-full flex items-center justify-center space-x-2 bg-white text-blue-600 hover:bg-gray-100 px-4 py-2 rounded-md font-medium transition-colors duration-200"
           >
@@ -95,12 +137,28 @@ export default function Dashboard() {
           </button>
         </div>
 
-        <div className="flex-1">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {Array.from({ length: 10 }).map((_, index) => (
-              <Card key={index} />
-            ))}
-          </div>
+
+        {/* Card Grid */}
+        <div className="flex justify-end">
+          <section className="grid grid-cols-5 pd-2 gap-4 mt-2 p-5">
+            {cardData.length > 0 ? (
+              cardData.map((item, index) => (
+                <Card
+                  key={index}
+                  name={item.name}
+                  skill={item.skill}
+                  experience={item.experience}
+                  location={item.location}
+                  rate={item.rate}
+                />
+              ))
+            ) : (
+              <p className="text-black">No service providers found.</p>
+            )}
+          </section>
+
+       
+
         </div>
       </div>
     </main>

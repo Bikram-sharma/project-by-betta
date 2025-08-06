@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 export default function Signup() {
   const router = useRouter();
@@ -27,20 +28,32 @@ export default function Signup() {
         body: JSON.stringify(data),
       });
 
+
       const result = await response.json(); 
+
 
       if (!response.ok) {
         throw new Error(result.message || "Failed to sign up");
       }
 
       form.reset();
-      alert("Sign up successful! Please log in.");
-      router.push("/auth/login"); 
+
+      Swal.fire({
+        title: "🎉 Signup Successful!",
+        text: "Welcome to Betta Service! You can now log in and get started.",
+        icon: "success",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "Let's Go!",
+      });
+      router.push("/auth/login");
+
     } catch (error: any) {
       console.error("Error during sign up:", error);
       setError(error.message || "Sign up failed. Please try again.");
     } finally {
+
       setIsLoading(false); 
+
     }
   };
 
@@ -116,7 +129,9 @@ export default function Signup() {
         <button
           type="submit"
           className="w-full bg-amber-50 hover:bg-amber-50/90 cursor-pointer h-10 rounded-lg font-bold text-black"
+
           disabled={isLoading} 
+
         >
           {isLoading ? "Signing up..." : "Sign up"}
         </button>

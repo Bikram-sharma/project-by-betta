@@ -37,10 +37,12 @@ export async function POST(req: NextRequest) {
       })
       .returning(["id", "name", "email"]);
 
-    await sendEmail({
-      email,
-      subject: "Sign up successful",
-      message: `Hi ${name},
+    try {
+      await sendEmail({
+        email,
+        subject: "Sign up successful",
+        message: `<pre style="font-family: Arial, sans-serif; white-space: pre-wrap; word-wrap: break-word;">
+Hi ${name},
 
 Welcome to Betta Service! 🎉
 
@@ -53,15 +55,19 @@ Your account has been successfully created. You can now:
 
 Get started by logging in here: http://localhost:3000/auth/login
 
-If you didn’t sign up for this account, please ignore this email or contact us at [support@yourapp.com].
+If you didn’t sign up for this account, please ignore this email or contact us at support@betta.com.
 
 Welcome again, and happy working!
 
 Warm regards,  
 The Betta Service Team  
-BettaService.com  
-`,
-    });
+BettaService.com
+</pre>`,
+      });
+    } catch (emailError) {
+      console.error("❌ Email sending failed:", emailError);
+      // You can still allow registration to succeed even if email fails
+    }
 
     return NextResponse.json(
       {
@@ -71,6 +77,7 @@ BettaService.com
       { status: 201 }
     );
   } catch (error: unknown) {
+    console.error("Registration error:", error);
     const errorMessage =
       error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json(
