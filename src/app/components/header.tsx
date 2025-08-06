@@ -8,7 +8,7 @@ export default function Header() {
 
   return (
     <header className="bg-blue-900 flex items-center justify-between px-8 py-4 shadow w-full sticky top-0 h-[10vh] z-10">
-      <div className="flex items-center space-x-2 bg-[url('/image/logo.png')] h-20 w-20 rounded-md bg-cover bg-center"></div>
+      <div className="flex items-center space-x-2 bg-[url('/image/logo.png')] h-18 w-18 rounded-md bg-cover bg-center"></div>
 
       <nav className="space-x-4">
         <Link href="/">
