@@ -6,8 +6,8 @@ import { useState } from "react";
 
 export default function Signup() {
   const router = useRouter();
-  const [error, setError] = useState<string | null>(null); // Added state for error handling
-  const [isLoading, setIsLoading] = useState(false); // Added state for loading
+  const [error, setError] = useState<string | null>(null); 
+  const [isLoading, setIsLoading] = useState(false); 
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -27,7 +27,7 @@ export default function Signup() {
         body: JSON.stringify(data),
       });
 
-      const result = await response.json(); // Ensure JSON response
+      const result = await response.json(); 
 
       if (!response.ok) {
         throw new Error(result.message || "Failed to sign up");
@@ -35,12 +35,12 @@ export default function Signup() {
 
       form.reset();
       alert("Sign up successful! Please log in.");
-      router.push("/auth/login"); // Redirect to your login page
+      router.push("/auth/login"); 
     } catch (error: any) {
       console.error("Error during sign up:", error);
       setError(error.message || "Sign up failed. Please try again.");
     } finally {
-      setIsLoading(false); // Reset loading state
+      setIsLoading(false); 
     }
   };
 
