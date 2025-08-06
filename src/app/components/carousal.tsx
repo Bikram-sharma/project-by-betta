@@ -74,7 +74,7 @@ export default function Carousel({ autoPlay = true, autoPlayInterval = 5000 }) {
   };
 
   return (
-    <div className="relative overflow-hidden w-[50vw] h-[60vh] mx-auto my-20">
+    <div className="relative overflow-hidden w-full h-100">
       {/* Slides */}
       <div
         className="flex transition-transform duration-700"
