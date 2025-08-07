@@ -20,6 +20,9 @@ export default function ServiceProviderDashboard() {
   });
 
   const [expandedService, setExpandedService] = useState<string | null>(null);
+  const [serviceCategories, setServiceCategories] = useState<
+    { id: number; name: string }[]
+  >([]);
 
   const services = [
     {
@@ -29,8 +32,8 @@ export default function ServiceProviderDashboard() {
         "Electrical repairs & wiring",
         "Plumbing & leak fixes",
         "Painting, tiling, and basic renovations",
-        "Furniture assembly & handyman work"
-      ]
+        "Furniture assembly & handyman work",
+      ],
     },
     {
       name: "Tech & IT Support",
@@ -39,8 +42,8 @@ export default function ServiceProviderDashboard() {
         "Computer & laptop repair",
         "Network setup & troubleshooting",
         "Cloud storage & data migration",
-        "IT training & tech consultation"
-      ]
+        "IT training & tech consultation",
+      ],
     },
     {
       name: "Creative & Design",
@@ -49,8 +52,8 @@ export default function ServiceProviderDashboard() {
         "Graphic design (posters, flyers, banners)",
         "UI/UX and web design",
         "Video editing & production",
-        "Illustration (books, education, promo)"
-      ]
+        "Illustration (books, education, promo)",
+      ],
     },
     {
       name: "Cleaning & Maintenance",
@@ -58,8 +61,8 @@ export default function ServiceProviderDashboard() {
         "House cleaning (regular/deep)",
         "Office and commercial cleaning",
         "Appliance servicing",
-        "Pest control services"
-      ]
+        "Pest control services",
+      ],
     },
     {
       name: "Tutoring & Education",
@@ -67,8 +70,8 @@ export default function ServiceProviderDashboard() {
         "School subject tutoring",
         "Language lessons",
         "Computer skills & digital literacy",
-        "Exam prep (BCSE, Class XII, etc.)"
-      ]
+        "Exam prep (BCSE, Class XII, etc.)",
+      ],
     },
     {
       name: "Skilled Labor & Others",
@@ -76,10 +79,12 @@ export default function ServiceProviderDashboard() {
         "Masonry & carpentry",
         "Welding & fabrication",
         "Event setup (sound, lighting, decor)",
-        "Delivery and courier support"
-      ]
-    }
+        "Delivery and courier support",
+      ],
+    },
   ];
+
+  useEffect(() => {}, []);
 
   useEffect(() => {
     if (session?.user) {
@@ -91,6 +96,21 @@ export default function ServiceProviderDashboard() {
         hours: "9 AM - 5 PM",
       });
     }
+    const getCategories = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:3000/api/service-categories"
+        );
+        if (!response.ok) throw new Error("Failed to fetch categories");
+
+        const data = await response.json();
+        setServiceCategories(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getCategories();
   }, [session]);
 
   if (status === "loading") return <div className="p-4">Loading...</div>;
@@ -223,9 +243,9 @@ export default function ServiceProviderDashboard() {
               </div>
               <div className="p-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                  {services.map((service, index) => (
+                  {serviceCategories.map((categories) => (
                     <div
-                      key={index}
+                      key={categories.id}
                       className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition duration-150 ease-in-out"
                     >
                       <div className="flex items-start">
@@ -245,14 +265,22 @@ export default function ServiceProviderDashboard() {
                           </svg>
                         </div>
                         <div className="ml-4">
-                          <h3 className="font-medium text-lg">{service.name}</h3>
-                          <button 
-                            onClick={() => toggleService(service.name)}
-                            className="mt-2 text-sm text-blue-600 hover:text-blue-800 font-medium flex items-center"
+                          <h3 className="font-medium text-lg">
+                            {categories.name}
+                          </h3>
+                          <button
+                            onClick={() => toggleService(categories.name)}
+                            className="mt-2 text-sm text-[#EA2849] font-medium flex items-center cursor-pointer"
                           >
-                            {expandedService === service.name ? "Hide details" : "Learn more"}
+                            {expandedService === categories.name
+                              ? "Hide details"
+                              : "Services"}
                             <svg
-                              className={`ml-1 w-4 h-4 transition-transform ${expandedService === service.name ? "transform rotate-90" : ""}`}
+                              className={`ml-1 w-4 h-4 transition-transform ${
+                                expandedService === categories.name
+                                  ? "transform rotate-90"
+                                  : ""
+                              }`}
                               fill="none"
                               stroke="currentColor"
                               viewBox="0 0 24 24"
@@ -265,14 +293,21 @@ export default function ServiceProviderDashboard() {
                               />
                             </svg>
                           </button>
-                          {expandedService === service.name && (
+                          {expandedService === categories.name && (
                             <ul className="mt-2 space-y-1 pl-2 text-sm">
-                              {service.subServices.map((subService, subIndex) => (
-                                <li key={subIndex} className="flex items-start">
-                                  <span className="h-1 w-1 mt-2 mr-2 rounded-full bg-gray-500"></span>
-                                  <span>{subService}</span>
-                                </li>
-                              ))}
+                              {services
+                                .find(
+                                  (service) => service.name === categories.name
+                                )
+                                ?.subServices.map((subService, subIndex) => (
+                                  <li
+                                    key={subIndex}
+                                    className="flex items-start"
+                                  >
+                                    <span className="h-1 w-1 mt-2 mr-2 rounded-full bg-gray-500"></span>
+                                    <span>{subService}</span>
+                                  </li>
+                                ))}
                             </ul>
                           )}
                         </div>
