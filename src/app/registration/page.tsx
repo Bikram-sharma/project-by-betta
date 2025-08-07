@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import Swal from "sweetalert2";
+import "@/app/globals.css";
 
 export default function Registration() {
   const router = useRouter();
@@ -11,7 +13,7 @@ export default function Registration() {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
-  const [formData, setFormData] = useState<FormData | null>(null);
+  const [formData, setFormData] = useState<object | null>(null);
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -27,20 +29,58 @@ export default function Registration() {
     e.preventDefault();
 
     const data = new FormData(e.currentTarget);
-    setFormData(data);
+    const body = Object.fromEntries(data);
+    setFormData(body);
     setShowWarning(true);
   };
 
   const handleConfirmSubmit = async () => {
     if (!formData) return;
-
     setError(null);
     setIsLoading(true);
     setShowWarning(false);
+    if (!session || !session.user?.id) {
+      setError("User session not found. Please log in again.");
+      return;
+    }
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      router.push("/dashboard");
+      const payload = {
+        ...formData,
+        user_id: session.user.id,
+      };
+      const response = await fetch("http://localhost:3000/api/registration", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        Swal.fire({
+          title: "Registration failed",
+          text: data.message,
+          icon: "error",
+          confirmButtonText: "OK",
+          customClass: {
+            confirmButton: "swal-confirm-btn",
+          },
+        });
+        throw new Error("Registration failed");
+      }
+      Swal.fire({
+        title: "Registration Successful!",
+        text: "You have been registered successfully.",
+        icon: "success",
+        confirmButtonText: "OK",
+        customClass: {
+          confirmButton: "swal-confirm-btn",
+        },
+      }).then(() => {
+        router.push("/dashboard");
+      });
     } catch (err) {
       setError("Registration failed. Please try again.");
     } finally {
@@ -59,13 +99,13 @@ export default function Registration() {
         </h2>
 
         <div className="w-full">
-          <label htmlFor="full-name" className="block mb-1 text-white">
+          <label htmlFor="full_name" className="block mb-1 text-white">
             Full Name
           </label>
           <input
             type="text"
-            name="full-name"
-            id="full-name"
+            name="full_name"
+            id="full_name"
             className="w-full h-10 rounded-lg bg-white text-black px-4 focus:outline-none focus:ring-2 focus:ring-amber-300"
             placeholder="Enter your full name"
             required
@@ -133,13 +173,13 @@ export default function Registration() {
         </div>
 
         <div className="w-full">
-          <label htmlFor="location" className="block mb-1 text-white">
+          <label htmlFor="phone_no" className="block mb-1 text-white">
             Phone Number
           </label>
           <input
             type="text"
-            name="phone-no"
-            id="phone-no"
+            name="phone_no"
+            id="phone_no"
             className="w-full h-10 rounded-lg bg-white text-black px-4 focus:outline-none focus:ring-2 focus:ring-amber-300"
             placeholder="123-456-7890"
             required
