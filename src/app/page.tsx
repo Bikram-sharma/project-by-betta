@@ -1,7 +1,5 @@
 "use client";
 
-import Carousel from "@/app/components/carousal";
-
 export default function Home() {
   return (
     <main className="min-h-screen">
