@@ -19,13 +19,66 @@ export default function ServiceProviderDashboard() {
     hours: "",
   });
 
+  const [expandedService, setExpandedService] = useState<string | null>(null);
+
   const services = [
-    "Home Services",
-    "Tech & IT Support",
-    "Creative & Design",
-    "Cleaning & Maintenance",
-    "Tutoring & Education",
-    "Skilled Labor & Others",
+    {
+      name: "Home Services",
+      subServices: [
+        "Solar panel installation",
+        "Electrical repairs & wiring",
+        "Plumbing & leak fixes",
+        "Painting, tiling, and basic renovations",
+        "Furniture assembly & handyman work"
+      ]
+    },
+    {
+      name: "Tech & IT Support",
+      subServices: [
+        "Website and app development",
+        "Computer & laptop repair",
+        "Network setup & troubleshooting",
+        "Cloud storage & data migration",
+        "IT training & tech consultation"
+      ]
+    },
+    {
+      name: "Creative & Design",
+      subServices: [
+        "Logo & branding design",
+        "Graphic design (posters, flyers, banners)",
+        "UI/UX and web design",
+        "Video editing & production",
+        "Illustration (books, education, promo)"
+      ]
+    },
+    {
+      name: "Cleaning & Maintenance",
+      subServices: [
+        "House cleaning (regular/deep)",
+        "Office and commercial cleaning",
+        "Appliance servicing",
+        "Pest control services"
+      ]
+    },
+    {
+      name: "Tutoring & Education",
+      subServices: [
+        "School subject tutoring",
+        "Language lessons",
+        "Computer skills & digital literacy",
+        "Exam prep (BCSE, Class XII, etc.)"
+      ]
+    },
+    {
+      name: "Skilled Labor & Others",
+      subServices: [
+        "Masonry & carpentry",
+        "Welding & fabrication",
+        "Event setup (sound, lighting, decor)",
+        "Delivery and courier support"
+      ]
+    }
   ];
 
   useEffect(() => {
@@ -42,6 +95,14 @@ export default function ServiceProviderDashboard() {
 
   if (status === "loading") return <div className="p-4">Loading...</div>;
   if (status === "unauthenticated") redirect("/auth/login");
+
+  const toggleService = (serviceName: string) => {
+    if (expandedService === serviceName) {
+      setExpandedService(null);
+    } else {
+      setExpandedService(serviceName);
+    }
+  };
 
   const bookingHandler = () => {
     Swal.fire({
@@ -184,11 +245,14 @@ export default function ServiceProviderDashboard() {
                           </svg>
                         </div>
                         <div className="ml-4">
-                          <h3 className="font-medium text-lg">{service}</h3>
-                          <button className="mt-2 text-sm text-blue-600 hover:text-blue-800 font-medium flex items-center">
-                            Learn more
+                          <h3 className="font-medium text-lg">{service.name}</h3>
+                          <button 
+                            onClick={() => toggleService(service.name)}
+                            className="mt-2 text-sm text-blue-600 hover:text-blue-800 font-medium flex items-center"
+                          >
+                            {expandedService === service.name ? "Hide details" : "Learn more"}
                             <svg
-                              className="ml-1 w-4 h-4"
+                              className={`ml-1 w-4 h-4 transition-transform ${expandedService === service.name ? "transform rotate-90" : ""}`}
                               fill="none"
                               stroke="currentColor"
                               viewBox="0 0 24 24"
@@ -201,6 +265,16 @@ export default function ServiceProviderDashboard() {
                               />
                             </svg>
                           </button>
+                          {expandedService === service.name && (
+                            <ul className="mt-2 space-y-1 pl-2 text-sm">
+                              {service.subServices.map((subService, subIndex) => (
+                                <li key={subIndex} className="flex items-start">
+                                  <span className="h-1 w-1 mt-2 mr-2 rounded-full bg-gray-500"></span>
+                                  <span>{subService}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
                         </div>
                       </div>
                     </div>
