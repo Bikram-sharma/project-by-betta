@@ -29,11 +29,11 @@ export default function ServicesPage() {
       try {
         const stored = sessionStorage.getItem("serviceData");
 
-        const { skill, location } = stored ? JSON.parse(stored) : null;
+        const { categories, location } = stored ? JSON.parse(stored) : null;
 
-        if (skill && location) {
+        if (categories && location) {
           const res = await fetch(
-            `http://localhost:3000/api/service-providers?skill=${skill}&location=${location}`,
+            `http://localhost:3000/api/service-providers?skill=${categories}&location=${location}`,
             {
               method: "GET",
               cache: "no-store",
