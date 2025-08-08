@@ -125,56 +125,55 @@ export default function ServiceProviderDashboard() {
   };
 
   const bookingHandler = () => {
-    Swal.fire({
-      title: "Provide Service Details",
-      html: `
-        <label for="skill" class="block text-left mb-1 font-semibold text-sm text-gray-700">Service</label>
-    <select id="skill" class="w-full mb-3 px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none">
-      <option value="" disabled selected>Select a service</option>
-      <option value="Plumber">Plumbing</option>
-      <option value="Electrician">Electrician</option>
-      <option value="Carpenter">Carpenter</option>
-      <option value="Painter">Painting</option>
-    </select>
+  Swal.fire({
+    title: "Provide Service Details",
+    html: `
+      <label for="categories" class="block text-left mb-1 font-semibold text-sm text-gray-700">Service</label>
+      <select id="categories" class="w-full mb-3 px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none">
+        <option value="" disabled selected>Select a Service Category</option>
+        ${serviceCategories.map(category => 
+          `<option value="${category.name}">${category.name}</option>`
+        ).join('')}
+      </select>
 
-    <label for="location" class="block text-left mb-1 font-semibold text-sm text-gray-700">Location</label>
-    <input type="text" id="location" placeholder="Enter location" class="w-full mb-3 px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+      <label for="location" class="block text-left mb-1 font-semibold text-sm text-gray-700">Location</label>
+      <input type="text" id="location" placeholder="Enter location" class="w-full mb-3 px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none" />
 
-    <label for="contact" class="block text-left mb-1 font-semibold text-sm text-gray-700">Contact No.</label>
-    <input type="text" id="contact" placeholder="Contact No." class="w-full mb-3 px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none" />
-      `,
-      cancelButtonText: "Cancel",
-      showCancelButton: true,
-      confirmButtonText: "Submit",
-      confirmButtonColor: "#EA2849",
-      focusConfirm: false,
-      customClass: {
-        confirmButton: "swal-confirm-btn",
-        cancelButton: "swal-cancel-btn",
-      },
-      preConfirm: () => {
-        const skill = (document.getElementById("skill") as HTMLSelectElement)
-          ?.value;
-        const location = (
-          document.getElementById("location") as HTMLInputElement
-        )?.value;
-        const contact = (document.getElementById("contact") as HTMLInputElement)
-          ?.value;
+      <label for="contact" class="block text-left mb-1 font-semibold text-sm text-gray-700">Contact No.</label>
+      <input type="text" id="contact" placeholder="Contact No." class="w-full mb-3 px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+    `,
+    cancelButtonText: "Cancel",
+    showCancelButton: true,
+    confirmButtonText: "Submit",
+    confirmButtonColor: "#EA2849",
+    focusConfirm: false,
+    customClass: {
+      confirmButton: "swal-confirm-btn",
+      cancelButton: "swal-cancel-btn",
+    },
+    preConfirm: () => {
+      const categories = (document.getElementById("categories") as HTMLSelectElement)
+        ?.value;
+      const location = (
+        document.getElementById("location") as HTMLInputElement
+      )?.value;
+      const contact = (document.getElementById("contact") as HTMLInputElement)
+        ?.value;
 
-        if (!skill || !location || !contact) {
-          Swal.showValidationMessage("Please fill in all fields");
-          return false;
-        }
-
-        return { skill, location, contact };
-      },
-    }).then((result) => {
-      if (result.isConfirmed && result.value) {
-        sessionStorage.setItem("serviceData", JSON.stringify(result.value));
-        router.push("/services");
+      if (!categories || !location || !contact) {
+        Swal.showValidationMessage("Please fill in all fields");
+        return false;
       }
-    });
-  };
+
+      return { categories, location, contact };
+    },
+  }).then((result) => {
+    if (result.isConfirmed && result.value) {
+      sessionStorage.setItem("serviceData", JSON.stringify(result.value));
+      router.push("/services");
+    }
+  });
+};
 
   return (
     <div className="min-h-screen">
