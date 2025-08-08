@@ -32,7 +32,9 @@ export default function ServicesPage() {
 
         if (categories && location) {
           const res = await fetch(
-            `http://localhost:3000/api/service-providers?categories=${categories}&location=${location}`,
+            `http://localhost:3000/api/service-providers?categories=${encodeURIComponent(
+              categories
+            )}&location=${encodeURIComponent(location)}`,
             {
               method: "GET",
               cache: "no-store",
