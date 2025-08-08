@@ -15,6 +15,7 @@ exports.seed = async function (knex) {
       location: "Thimphu",
       user_id: findUserId("ashish2@gmail.com"),
       phone_no: "+975XXXXXXXX",
+      service_categories:"Home Services"
     },
     {
       full_name: "Tshering",
@@ -24,6 +25,7 @@ exports.seed = async function (knex) {
       location: "Paro",
       user_id: findUserId("choszom@gmail.com"),
       phone_no: "+975XXXXXXXX",
+      service_categories:"Tech & IT Support"
     },
     {
       full_name: "Dawa",
@@ -33,6 +35,7 @@ exports.seed = async function (knex) {
       location: "Punakha",
       user_id: findUserId("dawa2050@gmail.com"),
       phone_no: "+975XXXXXXXX",
+      service_categories:"Creative & Design"
     },
     {
       full_name: "Chakhar",
@@ -42,6 +45,7 @@ exports.seed = async function (knex) {
       location: "Phuentsholing",
       user_id: findUserId("chakar@gmail.com"),
       phone_no: "+975XXXXXXXX",
+      service_categories:"Tutoring & Education"
     },
   ]);
 };
