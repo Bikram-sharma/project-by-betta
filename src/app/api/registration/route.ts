@@ -7,8 +7,16 @@ const db = knex(knexConfig.development);
 export async function POST(req: NextRequest) {
   const body = await req.json();
   console.log(body);
-  const { full_name, skill, rate, experience, location, phone_no, user_id } =
-    body;
+  const {
+    full_name,
+    skill,
+    rate,
+    experience,
+    location,
+    phone_no,
+    service_categories,
+    user_id,
+  } = body;
 
   if (
     !full_name ||
@@ -17,6 +25,7 @@ export async function POST(req: NextRequest) {
     !experience ||
     !location ||
     !phone_no ||
+    !service_categories ||
     !user_id
   ) {
     return NextResponse.json(
@@ -44,6 +53,7 @@ export async function POST(req: NextRequest) {
         experience,
         location,
         phone_no,
+        service_categories,
         user_id,
       })
       .returning("*");

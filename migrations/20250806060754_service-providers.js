@@ -7,6 +7,7 @@ exports.up = function (knex) {
     table.string("experience").notNullable();
     table.string("location").notNullable();
     table.string("phone_no", 12).notNullable();
+    table.string("service_categories").notNullable();
     table
       .integer("user_id")
       .unsigned()
