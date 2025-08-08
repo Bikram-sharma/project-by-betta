@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import knex from "knex";
 import knexConfig from "../../../../knexfile";
+import { sendEmail } from "@/app/helper/mailer";
 
 const db = knex(knexConfig.development);
 
@@ -57,6 +58,30 @@ export async function POST(req: NextRequest) {
         user_id,
       })
       .returning("*");
+
+    const { email } = await db("users")
+      .select("email")
+      .where("id", user_id)
+      .first();
+
+    await sendEmail({
+      email,
+      subject: "You’re Now a Service Provider on Betta Service!",
+      message: `
+    <div style="font-family: Arial, sans-serif; line-height: 1.5; color: #333;">
+      <p>Hi ${full_name},</p>
+
+      <p>Your registration as a <strong>service provider</strong> was successful. 
+      You can now log in, update your profile, and start offering your services.</p>
+
+      <p>Welcome aboard! 🚀</p>
+
+      <p>— The Betta Service Team<br>
+      <a href="mailto:support@betta.com">support@betta.com</a></p>
+    </div>
+  `,
+    });
+
     return NextResponse.json(serviceProvider, { status: 201 });
   } catch (error) {
     console.error("Registration Error:", error);
