@@ -15,7 +15,6 @@ export default function ServicesPage() {
   };
 
   const { data: session, status } = useSession();
-  const [searchTerm, setSearchTerm] = useState("");
   const [cardData, setCardData] = useState<ServiceProvider[]>([]);
 
   useEffect(() => {
@@ -33,7 +32,7 @@ export default function ServicesPage() {
 
         if (categories && location) {
           const res = await fetch(
-            `http://localhost:3000/api/service-providers?skill=${categories}&location=${location}`,
+            `http://localhost:3000/api/service-providers?categories=${categories}&location=${location}`,
             {
               method: "GET",
               cache: "no-store",
@@ -55,10 +54,6 @@ export default function ServicesPage() {
 
   if (status === "loading") return <div>Loading...</div>;
   if (!session) return null;
-
-  const handleSearch = () => {
-    console.log("Searching for:", searchTerm);
-  };
 
   return (
     <main className="min-h-screen bg-white p-5">
