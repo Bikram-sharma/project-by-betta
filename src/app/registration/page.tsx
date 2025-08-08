@@ -98,6 +98,26 @@ export default function Registration() {
           Freelancer Registration
         </h2>
 
+        <div className="w-full  col-span-1 md:col-span-2 mt-2">
+          <label>
+           Categories
+          </label>
+          <select 
+          required
+          id="service_categories" 
+            className="w-full h-10 rounded-lg bg-white text-black px-4 focus:outline-none focus:ring-2 focus:ring-amber-300">
+            <option value="" disabled selected >Select serviceCategories</option>
+            <option value="Home Services">Home Services</option>
+            <option value="Tech & IT Support">Tech & IT Support</option>
+            <option value="Creative & Design">Creative & Design</option>
+            <option value="Cleaning & Maintenance">Cleaning & Maintenance</option>
+            <option value="Tutoring & Education">Tutoring & Education</option>
+            <option value="Skilled Labor & Others">Skilled Labor & Others</option>
+
+          
+         </select>
+        </div>
+
         <div className="w-full">
           <label htmlFor="full_name" className="block mb-1 text-white">
             Full Name
