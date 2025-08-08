@@ -7,12 +7,10 @@ const db = knex(knexConfig.development);
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
-    const skill = searchParams.get("skill");
+    const service_categories = searchParams.get("categories");
     const location = searchParams.get("location");
 
-    console.log(skill);
-
-    if (!skill || !location) {
+    if (!service_categories || !location) {
       return NextResponse.json(
         { error: "Missing skill or location query parameter" },
         { status: 400 }
@@ -20,7 +18,7 @@ export async function GET(req: NextRequest) {
     }
 
     const providers = await db("service_providers")
-      .where("skill", skill)
+      .where("service_categories", service_categories)
       .select(
         "id",
         "full_name",
