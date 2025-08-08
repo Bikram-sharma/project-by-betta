@@ -7,7 +7,7 @@ const db = knex(knexConfig.development);
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  console.log(body);
+
   const {
     full_name,
     skill,
