@@ -18,7 +18,6 @@ export async function GET(req: NextRequest) {
     }
 
     const providers = await db("service_providers")
-      .where("service_categories", service_categories)
       .select(
         "id",
         "full_name",
@@ -27,7 +26,9 @@ export async function GET(req: NextRequest) {
         "experience",
         "location",
         "user_id"
-      );
+      )
+      .where("service_categories", service_categories);
+    console.log(providers);
 
     return new Response(JSON.stringify(providers), {
       status: 200,
