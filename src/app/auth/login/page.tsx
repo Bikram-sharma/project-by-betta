@@ -47,19 +47,17 @@ export default function Login() {
     <div className="w-[60vw] mx-auto flex justify-between py-10 ">
       <div className="w-[50%] pl-10 flex items-center ">
         <div className="border-r-2 py-10">
-          <h1 className="text-2xl mb-10 pr-5">
-            Welcome Back to Betta Service!
-          </h1>
-          <p className="mr-10 mb-10 text-center text-xl">
+          <h1 className="text-3xl mb-10 pr-5">Welcome to Betta Service!</h1>
+          <p className="mr-10 mb-5 text-xl">
             We’re excited to have you again, your skills make a difference!
           </p>
-          <p>Log in to:</p>
-          <ul className="list-disc list-inside">
-            <li>Manage your service listings or bookings</li>
+          <p className="text-xl">Log in to:</p>
+          <ul className="list-disc list-inside text-lg">
+            <li>Manage listings or bookings</li>
             <li> Connect with clients or professionals</li>
-            <li> Update your skills, profile, and availability</li>
+            <li> Update skills, profile, and availability</li>
           </ul>
-          <p className="mr-10 mt-10 h-10 border text-center text-xl rounded-full px-2 flex items-center justify-center">
+          <p className="mr-10 mt-8 h-10 border text-center text-xl rounded-full px-2 flex items-center justify-center">
             Opportunities are open, dive back in!
           </p>
         </div>

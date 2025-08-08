@@ -54,20 +54,20 @@ export default function Signup() {
 
   return (
     <div className="w-[60vw] mx-auto flex justify-between py-10">
-      <div className="w-[50%] pl-10 flex items-center ">
+      <div className="w-[50%] pl-10 flex items-center">
         <div className="border-r-2">
-          <h1 className="text-2xl m-5 pr-5">Welcome to Betta Service!</h1>
-          <p className="mr-10 mb-4 text-center text-xl">
+          <h1 className="text-3xl mb-5 pr-5">Welcome to Betta Service!</h1>
+          <p className="mr-10 mb-4  text-xl">
             Betta Service connects skilled professionals with clients who need
             them.
           </p>
-          <ul className="list-disc list-inside mb-5">
+          <ul className="list-disc list-inside mb-2 text-lg">
             <li>Offer your services</li>
             <li> Reach more customers</li>
             <li>Get paid for your skills</li>
           </ul>
-          <p>For clients:</p>
-          <ul className="list-disc list-inside">
+          <p className="text-xl">For clients:</p>
+          <ul className="list-disc list-inside text-lg">
             <li> Find trusted experts</li>
             <li> Book easily</li>
             <li>Chat & collaborate</li>
