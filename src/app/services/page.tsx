@@ -12,6 +12,7 @@ export default function ServicesPage() {
     experience: string;
     location: string;
     rate: string;
+    id: string;
   };
 
   const { data: session, status } = useSession();
@@ -77,6 +78,7 @@ export default function ServicesPage() {
               experience={item.experience}
               location={item.location}
               rate={item.rate}
+              id={item.id}
             />
           ))
         ) : (

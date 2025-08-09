@@ -231,7 +231,7 @@ export default function ServiceProviderDashboard() {
 
                 <button
                   onClick={bookingHandler}
-                  className="w-full border border-[#EA2849] hover:text-[#EA2849] bg-[#EA2849] h-10 hover:bg-transparent text-white rounded-full"
+                  className="w-full border border-[#EA2849] hover:text-[#EA2849] bg-[#EA2849] h-10 hover:bg-transparent text-white rounded-full cursor-pointer"
                 >
                   Book Service
                 </button>
