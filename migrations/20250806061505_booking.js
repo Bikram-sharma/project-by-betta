@@ -13,12 +13,6 @@ exports.up = function (knex) {
       .references("id")
       .inTable("service_providers")
       .onDelete("CASCADE");
-    table
-      .integer("service_id")
-      .unsigned()
-      .references("id")
-      .inTable("services")
-      .onDelete("SET NULL");
     table.datetime("booked_time").notNullable();
     table.timestamps(true, true);
   });
