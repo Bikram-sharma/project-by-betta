@@ -40,8 +40,11 @@ export default function Signup() {
         title: "🎉 Signup Successful!",
         text: "Welcome to Betta Service! You can now log in and get started.",
         icon: "success",
-        confirmButtonColor: "#3085d6",
+        confirmButtonColor: "#EA2849",
         confirmButtonText: "Let's Go!",
+        customClass: {
+          confirmButton: "swal-confirm-btn",
+        },
       });
       router.push("/auth/login");
     } catch (error: any) {

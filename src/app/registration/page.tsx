@@ -12,8 +12,6 @@ export default function Registration() {
 
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [showWarning, setShowWarning] = useState(false);
-  const [formData, setFormData] = useState<object | null>(null);
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -25,69 +23,91 @@ export default function Registration() {
     return <p className="text-center text-white mt-10">Loading...</p>;
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-    const data = new FormData(e.currentTarget);
+    const form = event.currentTarget;
+    const data = new FormData(form);
     const body = Object.fromEntries(data);
-    setFormData(body);
-    setShowWarning(true);
-  };
 
-  const handleConfirmSubmit = async () => {
-    if (!formData) return;
-    setError(null);
-    setIsLoading(true);
-    setShowWarning(false);
-    if (!session || !session.user?.id) {
-      setError("User session not found. Please log in again.");
-      return;
-    }
+    Swal.fire({
+      title: "Service Fee Notice",
+      html: ` <div style="margin-bottom: 1.5rem;">
+      <p style="color: #4a5568; margin-bottom: 0.75rem;">
+        Before you proceed, please note that we charge
+        <strong>10% service fee</strong> on all completed projects.
+      </p>
+      <p style="color: #4a5568;">
+        This fee helps us maintain the platform and provide support services.
+      </p>
+    </div>`,
+      icon: "info",
+      confirmButtonText: " I Understand, Continue",
+      confirmButtonColor: "#EA2849",
+      showCancelButton: true,
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        if (!Object.keys(body).length) return;
+        setError(null);
+        setIsLoading(true);
 
-    try {
-      const payload = {
-        ...formData,
-        experience: `${(formData as { experience: string }).experience} years`,
-        user_id: session.user.id,
-      };
+        if (!session || !session.user?.id) {
+          setError("User session not found. Please log in again.");
+          return;
+        }
 
-      const response = await fetch("http://localhost:3000/api/registration", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
+        try {
+          const payload = {
+            ...body,
+            experience: `${(body as { experience: string }).experience} years`,
+            user_id: session.user.id,
+          };
 
-      const data = await response.json();
-      if (!response.ok) {
-        Swal.fire({
-          title: "Registration failed",
-          text: data.message,
-          icon: "error",
-          confirmButtonText: "OK",
-          customClass: {
-            confirmButton: "swal-confirm-btn",
-          },
-        });
-        throw new Error("Registration failed");
+          const response = await fetch(
+            "http://localhost:3000/api/registration",
+            {
+              method: "POST",
+              headers: {
+                "content-type": "application/json",
+              },
+              body: JSON.stringify(payload),
+            }
+          );
+
+          const data = await response.json();
+          if (!response.ok) {
+            Swal.fire({
+              title: "Registration failed",
+              text: data.message,
+              icon: "error",
+              confirmButtonText: "OK",
+              customClass: {
+                confirmButton: "swal-confirm-btn",
+              },
+            }).then(() => {
+              form.reset();
+            });
+            throw new Error("Registration failed");
+          }
+          Swal.fire({
+            title: "Registration Successful!",
+            text: "You have been registered successfully.",
+            icon: "success",
+            confirmButtonText: "OK",
+            customClass: {
+              confirmButton: "swal-confirm-btn",
+            },
+          }).then(() => {
+            form.reset();
+            router.push("/dashboard");
+          });
+        } catch (err) {
+          setError("Registration failed. Please try again.");
+        } finally {
+          setIsLoading(false);
+        }
       }
-      Swal.fire({
-        title: "Registration Successful!",
-        text: "You have been registered successfully.",
-        icon: "success",
-        confirmButtonText: "OK",
-        customClass: {
-          confirmButton: "swal-confirm-btn",
-        },
-      }).then(() => {
-        router.push("/dashboard");
-      });
-    } catch (err) {
-      setError("Registration failed. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
+    });
   };
 
   return (
@@ -107,9 +127,7 @@ export default function Registration() {
             name="service_categories"
             className="w-full h-10 rounded-lg bg-white text-black px-4 focus:outline-none focus:ring-2 focus:ring-amber-300"
           >
-            <option value="" disabled selected>
-              Select serviceCategories
-            </option>
+            <option value="">Select serviceCategories</option>
             <option value="Home Services">Home Services</option>
             <option value="Tech & IT Support">Tech & IT Support</option>
             <option value="Creative & Design">Creative & Design</option>
@@ -251,66 +269,6 @@ export default function Registration() {
           </p>
         )}
       </form>
-
-      {showWarning && (
-        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg max-w-md w-full p-6 shadow-xl">
-            <div className="flex justify-between items-start mb-4">
-              <h3 className="text-xl font-bold text-gray-800">
-                Service Fee Notice
-              </h3>
-              <button
-                onClick={() => setShowWarning(false)}
-                className="text-gray-500 hover:text-gray-700"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
-
-            <div className="mb-6">
-              <p className="text-gray-700 mb-3">
-                Before you proceed, please note that we charge a{" "}
-                <span className="font-bold">10% service fee</span> on all
-                completed projects.
-              </p>
-              <p className="text-gray-700">
-                This fee helps us maintain the platform and provide support
-                services.
-              </p>
-            </div>
-
-            <div className="flex flex-col sm:flex-row justify-end gap-3">
-              <button
-                type="button"
-                onClick={() => setShowWarning(false)}
-                className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-md text-gray-800 transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                onClick={handleConfirmSubmit}
-                className="px-4 py-2 bg-amber-500 hover:bg-amber-600 rounded-md text-white font-medium transition-colors"
-              >
-                I Understand, Continue
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 }
