@@ -27,8 +27,9 @@ export default function Login() {
       });
 
       if (result?.error) {
-        console.log(result.error);
-        setError("Failed to log in. Please check your credentials.");
+        setError(
+          result.error || "Failed to log in. Please check your credentials."
+        );
       } else if (result?.url) {
         form.reset();
         console.log(result.url);
