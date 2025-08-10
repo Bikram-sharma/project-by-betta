@@ -1,8 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import knex from "knex";
-import knexConfig from "../../../../knexfile";
-
-const db = knex(knexConfig.development);
+import { db } from "@/app/helper/db";
 
 export async function GET(req: NextRequest) {
   try {

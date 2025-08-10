@@ -1,10 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
-import knex from "knex";
-import knexConfig from "../../../../../knexfile";
-
-const db = knex(knexConfig.development);
+import { db } from "@/app/helper/db";
 
 const handler = NextAuth({
   providers: [
